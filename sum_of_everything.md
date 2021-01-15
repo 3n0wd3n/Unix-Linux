@@ -2204,5 +2204,13 @@ echo "čau"-> vypsání textu na standartní výstup konzole
 
 echo "čau" | pokus.txt -> vypsání textu do souboru
 
-# Náhodné příklady
+# Příklady ze zkoušky 
 
+** Kuba **
+
+     sed -n '/BEGIN/,/END/ p' data3.txt | sed 's/,/./g' | awk '/[0-9]/ {for (i=1;i<5;i++){ x+=$i} {print x > "vysledek.txt"} {x=0}}'
+     
+     
+** Michal **
+
+    sed "s/BEGIN/0/g; s/END/0/g; s/,/./g" temporary.txt | awk 'BEGIN {print "Aritmeticky prumer"} NF > 0 {sum = sum +  $1 $2 $3} {print sum/NF}'
