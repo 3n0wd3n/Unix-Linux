@@ -2172,6 +2172,8 @@ rmdir -> maže adresáře (musí být prázdné)
 
 rm -r -> smaže i adresáře, ve kterých něco je
 
+rm -rfv adresar -> smaže obsah plného adresáře (například budu mít adresář texty, ve kterém bude text1.tx a text2.txt, tak když použiju rm -rfv texty/*, tak zůstane adresář texty, ale text1.txt a text2.txt zůstane)
+
 mv - přesouvání a přejmenování zároveň
 
 ctrl + d -> ukončení procesu (nebo zadávání například pokud tvoříte soubor pomcí cat)
