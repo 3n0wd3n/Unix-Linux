@@ -95,6 +95,7 @@ Zkuste v adresáři /tmp vytvořit soubor a smazat cizí soubor
 Připojte USB flash disk, zobrazte informaci o obsazeném a volném místě na něm (program df) a velikosti jednotlivých adresářů na něm (program du).
 
       --||--
+      /media/cdrom --> tady se automaticky zobrazí flashka
 
 Zobrazte výpis všech procesů "vašeho" a jiného uživatele, všechny procesy v systému, ve stromové struktuře, pouze s informací o PID a příkazu procesu.
       
@@ -104,7 +105,11 @@ Zobrazte výpis všech procesů "vašeho" a jiného uživatele, všechny procesy
 
 Spusťte (grafický) program gnome-calculator, získejte PID jeho procesu a programem kill jej pozastavte (a zkuste jej ovládat), rozběhněte a ukončete. Spusťte jej poté znovu, z terminálu, a zavřete okno terminálu. A znovu, a ukončete shell v terminálu (jako odhlášení se např. v ssh).
 
+      $ gnome-calculator DODĚLAT
+
 Spusťte (grafické) programy gnome-calculator a gnome-mines (v terminálu), první tzv. na pozadí a druhý tzv. na popředí. Druhý přesuňte na pozadí a první na popředí.
+
+      $ gnome-calculator DODĚLAT
 
 Zobrazte seznam všech souborů a podadresářů v adresáři /dev se jménem začínajícím ttycifra, kde cifra je 0 až 9, a ttynecifra, kde necifra není 0 až 9.
 
