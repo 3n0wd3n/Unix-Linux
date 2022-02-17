@@ -7,6 +7,8 @@ Napište do příkazové řádky terminálu jakýkoliv text, pohybujte po něm k
 
 Prohlédněte si manuálovou stránku programu date (po zobrazení klávesy ↑ a ↓, PgUp, PgDn, h, q).
 
+      $ man date
+
 Pomocí programu date (a jeho manuálové stránky) zobrazte (do terminálu) název dne v týdnu (pouze).
 
 Pomocí programu ssh se připojte (přihlašte) pod svým uživatelským jménem na server phoenix.inf.upol.cz a odhlašte se z něj.
