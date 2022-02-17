@@ -1,8 +1,6 @@
 # Unix-Linux
   an UPOL pre-exam repositor for my summmary
   
-  ssh hajnym@phoenix.inf.upol.cz
-  
   https://vyjidacek.cz/unix/
   
   https://mamut.spseol.cz/nozka/psk/
@@ -18,3 +16,5 @@
   https://linuxhint.com/conditional_statement_awk_command/
   
   https://www.digitalocean.com/community/tutorials/how-to-use-the-awk-language-to-manipulate-text-in-linux
+  
+  > ssh hajnym@phoenix.inf.upol.cz
