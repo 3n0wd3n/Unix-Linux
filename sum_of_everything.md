@@ -105,15 +105,15 @@
     // Otevření souboru v programu gedit a vložení textu "Hello World"
     michal@virtual ~/pokusy $ gedit text.txt
 
-    roman@virtual ~/pokusy $ ls -l
+    michal@virtual ~/pokusy $ ls -l
     total 4
     -rw-rw-r-- 1 roman roman 14 Feb 11 11:57 text.txt
 
-    roman@virtual ~/pokusy $ file text.txt
+    michal@virtual~/pokusy $ file text.txt
     text.txt: ASCII text
 
     // Výpis obsahu souboru do konzole
-    roman@virtual ~/pokusy $ cat text.txt
+    michal@virtual~/pokusy $ cat text.txt
     Hello world!!
 
     less text.txt
