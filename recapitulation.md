@@ -56,19 +56,51 @@ Zkopírujte soubor welcome.html do souboru index.html, ten přejmenujte na main.
 
 Vytvořte symbolický odkaz index.html na kopii souboru welcome.html, kopii smažte, opět vytvořte a pak smažte odkaz. Mezi kroky si zobrazte obsah adresáře s odkazem a soubory s podrobnějšími informacemi (o odkazu).
 
+      $ ln -s welcome.html index.html
+      $ ls -l
+      $ rm -f welcome.html 
+      $ ls -l
+
 Zobrazte skupiny, do kterých ("váš") uživatel patří, a obsah adresáře s informacemi o právech souborů a podadresářů.
+
+      $ whoami
+      $ groups
 
 Odeberte souboru welcome.html právo zápisu a zkuste do něj zapsat (např. programem gedit), právo čtení a zobrazit jeho obsah, poté práva souboru vraťte.
 
+      $ chmod u-w welcome.html
+      $ gedit welcome.html
+      $ chmod u+rw
+
 Odeberte adresáři public_html právo vstupu (všem uživatelům) a zkuste zobrazit jeho obsah a vstoupit do něj, poté právo vraťte a odeberte právo čtení a opět zkuste zobrazit jeho obsah a vstoupit do něj, pak opět právo vraťte.
+      
+      $ chmod u-r public_html
+      $ chmod u+r public_html
 
 Nastavte všechna práva vlastníkovi a pouze právo vstupu skupině a ostatním uživatelům adresáři ~/public_html.
 
-Zkuste v adresáři /tmp vytvořit soubor a smazat cizí soubor.
+      defaultně -> -rw-r--r--
+      upravime na -rwxr--r-- pomocí příkazu 
+      $ chmod u+x public_html
+
+Zkuste v adresáři /tmp vytvořit soubor a smazat cizí soubor
+
+      $ cd /tmp
+      $ touch soubor
+      $ ls -l
+      $ rm -f systemd-private-d2a50b49752242638f6448628e129f82-upower.service-cDbvNg/
+      nelze odstranit 'systemd-private-d2a50b49752242638f6448628e129f82-upower.service-cDbvNg/': je adresářem
+      $ rm -f soubor
 
 Připojte USB flash disk, zobrazte informaci o obsazeném a volném místě na něm (program df) a velikosti jednotlivých adresářů na něm (program du).
 
+      --||--
+
 Zobrazte výpis všech procesů "vašeho" a jiného uživatele, všechny procesy v systému, ve stromové struktuře, pouze s informací o PID a příkazu procesu.
+      
+      $ ps
+      $ ps -aux | less
+      $ pstree
 
 Spusťte (grafický) program gnome-calculator, získejte PID jeho procesu a programem kill jej pozastavte (a zkuste jej ovládat), rozběhněte a ukončete. Spusťte jej poté znovu, z terminálu, a zavřete okno terminálu. A znovu, a ukončete shell v terminálu (jako odhlášení se např. v ssh).
 
@@ -83,4 +115,3 @@ Při zadávání jmen programů a souborů nebo adresářů stiskněte (opakovan
 Uložte výstup programu date do souboru a pak do něj přidejte výpis všech procesů v systému.
 
 Zobrazte výpis všech procesů v systému v programu less.
-Copyright © Jan Outrata
