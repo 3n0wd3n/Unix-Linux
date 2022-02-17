@@ -38,12 +38,21 @@ Zobrazte nápovědu shellu k příkazu cd (program help).
       $ help cd
 
 Pomocí (grafického) programu gedit (Textový editor) upravte obsah souboru welcome.html v adresáři ~/public_html (na serveru phoenix.inf.upol.cz je tento soubor interpretován jako webová stránka na adrese http://phoenix.inf.upol.cz/~login, kde login je uživatelské jméno).
+      
+      $ cd public_html/
+      $ ls
+      -> welcome.html
+      $ gedit welcome.html      
 
 Zobrazte obsah souboru welcome.html (programy cat, less, klávesy ↑ a ↓, kolečko myši, PgUp, PgDn, S-PgUp, S-PgDn, h, q).
       
       $ cat welcome.html
 
 Zkopírujte soubor welcome.html do souboru index.html, ten přejmenujte na main.html a poté tento smažte (s volbami -i a -f). Zkopírujte adresář public_html na adresář web a poté tento smažte.
+
+      $ cp welcome.html index.html
+      $ mv index.html main.html
+      $ rm -f main.html
 
 Vytvořte symbolický odkaz index.html na kopii souboru welcome.html, kopii smažte, opět vytvořte a pak smažte odkaz. Mezi kroky si zobrazte obsah adresáře s odkazem a soubory s podrobnějšími informacemi (o odkazu).
 
