@@ -1,5 +1,7 @@
 UNIX
+
 LINUX (VYTVOŘIL Linu Torwalds) -> Linux is not UNIX 
+
 # Pohyb v terminálu
 
  Ctrl + a Skok na začátek řádku (Home)
