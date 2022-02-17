@@ -11,21 +11,37 @@ Prohlédněte si manuálovou stránku programu date (po zobrazení klávesy ↑ 
 
 Pomocí programu date (a jeho manuálové stránky) zobrazte (do terminálu) název dne v týdnu (pouze).
 
+      $ date +%A
+
 Pomocí programu ssh se připojte (přihlašte) pod svým uživatelským jménem na server phoenix.inf.upol.cz a odhlašte se z něj.
+
+      $ ssh hajnym@phoenix.inf.upol.cz
 
 Listujte historií zadaných příkazů (klávesy ↑ a ↓, M-<, M->), vyhledejte příkaz z historie (klávesa C-r a zadávání textu, C-g).
 
 Zobrazte cestu k aktuálnímu adresáři.
 
+      $ pwd
+
 Zobrazte seznam všech souborů a podadresářů, včetně tzv. skrytých, v aktuálním adresáři (= obsah adresáře) s podrobnějšími informacemi (jméno, velikost, datum, práva aj.) o nich.
+
+      $ ls -la
 
 Vytvořte adresář tmp, vejděte do něj a vyjděte z něj do nadřazeného adresáře.
 
+      $ mkdir tmp
+      $ cd tmp
+      $ cd ..
+
 Zobrazte nápovědu shellu k příkazu cd (program help).
+      
+      $ help cd
 
 Pomocí (grafického) programu gedit (Textový editor) upravte obsah souboru welcome.html v adresáři ~/public_html (na serveru phoenix.inf.upol.cz je tento soubor interpretován jako webová stránka na adrese http://phoenix.inf.upol.cz/~login, kde login je uživatelské jméno).
 
 Zobrazte obsah souboru welcome.html (programy cat, less, klávesy ↑ a ↓, kolečko myši, PgUp, PgDn, S-PgUp, S-PgDn, h, q).
+      
+      $ cat welcome.html
 
 Zkopírujte soubor welcome.html do souboru index.html, ten přejmenujte na main.html a poté tento smažte (s volbami -i a -f). Zkopírujte adresář public_html na adresář web a poté tento smažte.
 
