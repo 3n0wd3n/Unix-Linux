@@ -170,6 +170,15 @@ LINUX (VYTVOŘIL Linu Torwalds) -> Linux is not UNIX
     michal@virtual ~/pokusy $ ls -l
     
 # Přístupová práva
+    
+    u: User, meaning the owner of the file.
+    g: Group, meaning members of the group the file belongs to.
+    o: Others, meaning people not governed by the u and g permissions.
+    a: All, meaning all of the above.
+    
+    r: Read permissions. The file can be opened, and its content viewed.
+    w: Write permissions. The file can be edited, modified, and deleted.
+    x: Execute permissions. If the file is a script or a program, it can be run (executed).
 
     // Zjístění práv
     michal@virtual ~/pokusy $ ls -l
