@@ -125,10 +125,8 @@ Uložte výstup programu date do souboru a pak do něj přidejte výpis všech p
       $ touch tmp_file.txt
       $ date > tmp_file.txt
       $ ps >> tmp_file.txt
-      //jeden zobáček (>) přepíše všechno co je v souboru a dva zobáčky (>>) přidají           nakonec souboru 
-
-      
-
-      
+      //jeden zobáček (>) přepíše všechno co je v souboru a dva zobáčky (>>) přidají           nakonec souboru      
 
 Zobrazte výpis všech procesů v systému v programu less.
+      
+      $ ps -aux | less
