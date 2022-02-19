@@ -17,6 +17,6 @@
   
   https://www.digitalocean.com/community/tutorials/how-to-use-the-awk-language-to-manipulate-text-in-linux
   
-  > ssh hajnym@phoenix.inf.upol.cz
-  > 
-  > password: ********
+    ssh hajnym@phoenix.inf.upol.cz
+  
+    password: ********
