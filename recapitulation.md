@@ -113,9 +113,7 @@ Spusťte (grafické) programy gnome-calculator a gnome-mines (v terminálu), prv
 
 Zobrazte seznam všech souborů a podadresářů v adresáři /dev se jménem začínajícím ttycifra, kde cifra je 0 až 9, a ttynecifra, kde necifra není 0 až 9.
 
-Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou ").
-
-Při zadávání jmen programů a souborů nebo adresářů stiskněte (opakovaně) klávesu Tab!
+Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou "). 
 
 Uložte výstup programu date do souboru a pak do něj přidejte výpis všech procesů v systému.
 
