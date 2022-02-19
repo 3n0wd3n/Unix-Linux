@@ -113,8 +113,22 @@ Spusťte (grafické) programy gnome-calculator a gnome-mines (v terminálu), prv
 
 Zobrazte seznam všech souborů a podadresářů v adresáři /dev se jménem začínajícím ttycifra, kde cifra je 0 až 9, a ttynecifra, kde necifra není 0 až 9.
 
-Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou "). 
+Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou ").
+
+      $ touch "***".txt 
+      $ rm -f "***".txt
+      $ touch '"1 & 2"'.txt
+      $ rm -f touch '"1 & 2"'.txtqui
 
 Uložte výstup programu date do souboru a pak do něj přidejte výpis všech procesů v systému.
+
+      $ touch tmp_file.txt
+      $ date > tmp_file.txt
+      $ ps >> tmp_file.txt
+      //jeden zobáček (>) přepíše všechno co je v souboru a dva zobáčky (>>) přidají           nakonec souboru 
+
+      
+
+      
 
 Zobrazte výpis všech procesů v systému v programu less.
