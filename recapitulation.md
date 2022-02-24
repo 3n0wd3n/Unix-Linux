@@ -60,6 +60,8 @@ Vytvořte symbolický odkaz index.html na kopii souboru welcome.html, kopii sma�
       $ ls -l
       $ rm -f welcome.html 
       $ ls -l
+      
+      //když smažeme soubor na který odkazujeme, tak odkaz existuje, ale neni funkční když ho vrátíme ten soubor odkaz           se zase zbarví, tak, že poznáme, že je zase funkční když píšeme do odkazu, tak píšeme rovnou do souboru 
 
 Zobrazte skupiny, do kterých ("váš") uživatel patří, a obsah adresáře s informacemi o právech souborů a podadresářů.
 
@@ -97,7 +99,7 @@ Připojte USB flash disk, zobrazte informaci o obsazeném a volném místě na n
       --||--
       /media/cdrom --> tady se automaticky zobrazí flashka
 
-Zobrazte výpis všech procesů "vašeho" a jiného uživatele, všechny procesy v systému, ve stromové struktuře, pouze s informací o PID a příkazu procesu.
+Zobrazte výpis všech procesů "vašeho" a jiného uživatele, všechny procesy v systému, ve stromové struktuře, pouze s informací o PID a příkazu procesu. ($ ps aux f -ef -H -u o -o, $ htop)
       
       $ ps
       $ ps -aux | less
@@ -130,3 +132,77 @@ Uložte výstup programu date do souboru a pak do něj přidejte výpis všech p
 Zobrazte výpis všech procesů v systému v programu less.
       
       $ ps -aux | less
+      
+ Vytvořte v textovém editoru (vi, vim, emacs, jed, nano aj.) tabulkový soubor s několika řádky a sloupci (oddělenými např. tabulátorem). Vyzkoušejte si operace smazání (znaků a celého řádku), kopírování a vložení (znaků a celého řádku), undo, vyhledávání, náhrady řetězce za jiný.
+ 
+      $ touch tab_soubor.txt
+      $ gedit tab_soubor.txt
+      $ cat tab_soubor.txt
+      21	20	19	18	17	16
+      22	7	6	5	4	15
+      23	8	1	2	3	14
+      24	9	10	11	12	13
+      25	26	27	28	29	30
+      //SMÁZÁNÍ PRVNÍHO ŘÁDKU
+      $ sed '1d' tab_soubor.txt
+      //SMAZÁNÍ POSLEDNÍHO ŘÁDKU
+      $ sed '$d' tab_soubor.txt
+      //SMAZÁNÍ ROZSAHU ŘÁDKŮ
+      $ sed '2,4d' tab_soubor.txt
+      //SMAZÁNÍ VŠECH ŘÁDKU KROM PRVNÍHO
+      $ sed '1!d' tab_soubor.txt
+      //SMAZÁNÍ VŠECH ŘÁDKŮ KROM 2., 4.
+      $ sed '2,4!d' tab_soubor.txt
+      //SMAZÁNÍ PRVNÍHO A POSLEDNHO ŘÁDKU
+      $ sed '1d;$d' tab_soubor.txt
+      //SMAZÁNÍ PRÁZDNÝCH ŘÁDKŮ
+      $ sed '/^$/d' tab_souboru.txt
+      //DALŠÍ MAZÁNÍ
+      -->   https://www.folkstalk.com/2013/03/sed-remove-lines-file-unix-examples.html
+            https://www.theunixschool.com/2014/08/sed-examples-remove-delete-chars-from-line-file.html
+      //SMAZÁNÍ NĚJAKÉHO CHARAKTERU
+      $ sed 's/1//' tab_soubor.txt 
+      2       20      19      18      17      16
+      22      7       6       5       4       5
+      23      8               2       3       14
+      24      9       0       11      12      13
+      25      26      27      28      29      30
+      --> jak si můžeme všimnout vždycky vymaže první výskyt
+      //ZKOPIROVÁNÍ A VLOŽENÍ ŘÁDK§ 1-2 do tmp.txt
+      $ sed -n '1,2p' tab_soubor.txt > tmp.txt
+      //ZÁMĚNA ŘÁDKU SOUBORU ZA JINÝ PODLE ČÍSLA ŘÁDKU
+      $ sed '1s/.*/replacement-line/' tab_soubor.txt
+      replacement-line
+      22      7       6       5       4       15
+      23      8       1       2       3       14
+      24      9       10      11      12      13
+      25      26      27      28      29      30
+      //ZÁMĚNA ŘÁDKU SOUBORU ZA JINÝ
+      $ touch tmp.txt
+      $ gedit tmp.txt
+      $ cat tmp.txt
+      42 
+      number forthy-two 
+      kill
+      $ sed 's/42/22'/ tmp.txt
+      22 
+      number forthy-two
+      kill      
+
+Zobrazte očíslované řádky vstupu od 10. řádku do 20. řádku včetně v opačném pořadí řádků.
+
+Setřiďte (tabulkový) výstup programu df podle čtvrtého sloupce (volné místo) číselně sestupně.
+
+Prohoďte v tabulkovém vstupu (sloupce oddělené např. tabulátorem) první a druhý sloupec.
+
+Zobrazte obsah adresáře s pouze informacemi o právech, velikosti a jménu.
+
+Zobrazte počet skupin, do kterých ("váš") uživatel patří.
+
+Zobrazte na jednom řádku seznam všech uživatelů, pod kterými běží v systému alespoň jeden proces.
+
+Zobrazte pouze řádky souboru, které nejsou v jiném souboru, tj. "rozdíl" souborů (jako rozdíl množin).
+
+Zobrazte pouze řádky vstupu obsahující číslo zapsané v šestnáctkové soustavě začínající 0x (s malými i velkými písmeny, jako jedno slovo).
+
+Zobrazte pouze řádky vstupu, které neobsahují dvě stejná čísla. 
