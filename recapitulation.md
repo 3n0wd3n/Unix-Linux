@@ -191,7 +191,17 @@ Zobrazte výpis všech procesů v systému v programu less.
 
 Zobrazte očíslované řádky vstupu od 10. řádku do 20. řádku včetně v opačném pořadí řádků.
 
+      $ cat --number tab_soubor.txt
+
 Setřiďte (tabulkový) výstup programu df podle čtvrtého sloupce (volné místo) číselně sestupně.
+            
+      $ touch df.txt
+      $ df > df.txt
+      $ sed -n '2,12p' df.txt > tmp.txt
+      $ rm -f df.txt
+      $ sort -k 4,4 tmp.txt
+      
+
 
 Prohoďte v tabulkovém vstupu (sloupce oddělené např. tabulátorem) první a druhý sloupec.
 
