@@ -190,8 +190,44 @@ Zobrazte výpis všech procesů v systému v programu less.
       kill      
 
 Zobrazte očíslované řádky vstupu od 10. řádku do 20. řádku včetně v opačném pořadí řádků.
-
+      
+      $ touch tmp_soubor.txt
+      $ cat tmp_soubor.txt
       $ cat --number tab_soubor.txt
+      1.
+      2.
+      3.
+      4.
+      5.
+      6.
+      7.
+      8.
+      9.
+      10.aa
+      12.bbb
+      13.cccc
+      14.ddddd
+      15.eeeeee
+      16.fffffff
+      17.gggggggg
+      18.hhhhhhhhh
+      19.iiiiiiiiii
+      20.jjjjjjjjjjj
+      21.
+      $ sed -n '/^10\./,/^20\./p' tmp_file.txt 
+      10.aa
+      12.bbb
+      13.cccc
+      14.ddddd
+      15.eeeeee
+      16.fffffff
+      17.gggggggg
+      18.hhhhhhhhh
+      19.iiiiiiiiii
+      20.jjjjjjjjjjj
+      --> podobně se to dá napsat i takto = $ grep -w -e '^1[[:digit:]]' -e '^20' tmp_file.txt
+                                          = $ grep -E '^(1[0-9]|20)\.' tmp_file.txt
+                                          = $ awk '/^10\./,/^20\./' tmp_file.txt
 
 Setřiďte (tabulkový) výstup programu df podle čtvrtého sloupce (volné místo) číselně sestupně.
             
@@ -201,8 +237,6 @@ Setřiďte (tabulkový) výstup programu df podle čtvrtého sloupce (volné mí
       $ rm -f df.txt
       $ sort -k 4,4 tmp.txt
       
-
-
 Prohoďte v tabulkovém vstupu (sloupce oddělené např. tabulátorem) první a druhý sloupec.
 
 Zobrazte obsah adresáře s pouze informacemi o právech, velikosti a jménu.
