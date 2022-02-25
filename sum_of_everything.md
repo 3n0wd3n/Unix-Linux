@@ -592,6 +592,8 @@ Vypíše obsah souborů vedle sebe.
 # Příkaz grep
 
 Nástroj pro filtrování řádků na základě regularního výrazu.
+Používáme když chceme něco vyhledat mezi složkami, nebo ve složkách a nebo když chceme vyfiltrovat výstup
+Je rychlý a nečte celé soubory když nemusí
 
     // Vybere řádky obsahující dané slovo
     grep parallels /etc/passwd
