@@ -239,6 +239,10 @@ Setřiďte (tabulkový) výstup programu df podle čtvrtého sloupce (volné mí
       
 Prohoďte v tabulkovém vstupu (sloupce oddělené např. tabulátorem) první a druhý sloupec.
 
+      $ awk '{print $2"\t"$1}' tmp_file.txt
+      nebo
+      $ awk '{a=$1; $1=$2; $2=a}1' OFS='\t' tmp_file.txt
+
 Zobrazte obsah adresáře s pouze informacemi o právech, velikosti a jménu.
 
 Zobrazte počet skupin, do kterých ("váš") uživatel patří.
