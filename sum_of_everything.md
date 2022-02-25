@@ -866,6 +866,8 @@ sed -n ’/Alchemist/,$ p’ books.txt
 sed -n ’/Alchemist/,+2 p’ books.txt
 
 # Základní příkazy editoru sed
+   
+   https://www.geeksforgeeks.org/sed-command-in-linux-unix-with-examples/
 
    **Tisk řádku**
    
