@@ -115,6 +115,8 @@ Spusťte (grafické) programy gnome-calculator a gnome-mines (v terminálu), prv
 
 Zobrazte seznam všech souborů a podadresářů v adresáři /dev se jménem začínajícím ttycifra, kde cifra je 0 až 9, a ttynecifra, kde necifra není 0 až 9.
 
+      *
+
 Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou ").
 
       $ touch "***".txt 
@@ -245,11 +247,19 @@ Prohoďte v tabulkovém vstupu (sloupce oddělené např. tabulátorem) první a
 
 Zobrazte obsah adresáře s pouze informacemi o právech, velikosti a jménu.
 
+      $ ls -l | awk '{print $1, $5, $9}'
+
 Zobrazte počet skupin, do kterých ("váš") uživatel patří.
+      
+      $ groups michaelhajny | wc -w (musíš si ale odečíst mínus dva protože je předtím prefix ve           stylu nazev_uzivatele :)
 
 Zobrazte na jednom řádku seznam všech uživatelů, pod kterými běží v systému alespoň jeden proces.
 
+      *
+
 Zobrazte pouze řádky souboru, které nejsou v jiném souboru, tj. "rozdíl" souborů (jako rozdíl množin).
+
+      https://stackoverflow.com/questions/15384818/how-to-get-the-difference-only-additions-between-       two-files-in-linux
 
 Zobrazte pouze řádky vstupu obsahující číslo zapsané v šestnáctkové soustavě začínající 0x (s malými i velkými písmeny, jako jedno slovo).
 
