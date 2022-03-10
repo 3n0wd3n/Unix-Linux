@@ -591,6 +591,8 @@ Vypíše obsah souborů vedle sebe.
 
 # Příkaz grep
 
+https://www.gnu.org/software/grep/manual/grep.html
+
 Nástroj pro filtrování řádků na základě regularního výrazu.
 Používáme když chceme něco vyhledat mezi složkami, nebo ve složkách a nebo když chceme vyfiltrovat výstup
 Je rychlý a nečte celé soubory když nemusí
