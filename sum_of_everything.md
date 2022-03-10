@@ -729,6 +729,9 @@ grep -E " [[:digit:]]{2,3}$" books.txt
 grep -E ’Martin|Tolkien’ books.txt
 
 # Proudový editor sed
+
+https://www.gnu.org/software/sed/manual/sed.html
+
 – vytvořen 1974 v Bellových laboratořích
 
 – autor Lee E. McMahon
