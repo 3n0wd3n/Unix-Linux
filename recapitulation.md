@@ -264,3 +264,22 @@ Zobrazte pouze řádky souboru, které nejsou v jiném souboru, tj. "rozdíl" so
 Zobrazte pouze řádky vstupu obsahující číslo zapsané v šestnáctkové soustavě začínající 0x (s malými i velkými písmeny, jako jedno slovo).
 
 Zobrazte pouze řádky vstupu, které neobsahují dvě stejná čísla. 
+
+Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argument (= obsah adresáře) s informacemi o typu (soubor, adresář, symbolický odkaz) a právech (čtení, zápis, spouštění) pro spouštějícího uživatele. Při žádném argumentu v aktuálním adresáři, při prvním argumentu -a (adresář by byl druhý) včetně tzv. skrytých souborů a podadresářů (jinak ne).
+
+      FIRST_ARGUMENT=${1}
+      echo $FIRST_ARGUMENT
+      
+      if [ $# -eq 1 ]
+      then
+          ls -lR $1
+      else 
+          CURRENT_DIRECTORIE=$(pwd)
+          ls -lR $CURRENT_DIRECTORIE
+      fi
+
+Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií dotazů je menší/větší než X? algoritmem půlení intervalu. Při jednom argumentu je první číslo 0, při žádném navíc druhé 100.
+
+
+
+Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) čísel oddělených mezerou od čísla zadaného jako první argument do čísla zadaného jako třetí argument, obojí včetně, s přírůstkem zadaným jako druhý argument – kladným, pokud je počáteční číslo menší nebo rovno než cílové, jinak záporným. Při dvou argumentech je chybějící přírůstek roven 1, při jednom je i chybějící počáteční číslo rovno 1.
