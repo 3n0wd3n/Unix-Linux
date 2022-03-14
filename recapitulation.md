@@ -280,6 +280,54 @@ Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argu
 
 Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií dotazů je menší/větší než X? algoritmem půlení intervalu. Při jednom argumentu je první číslo 0, při žádném navíc druhé 100.
 
+      #!/bin/bash
+      FIRST_ARGUMENT=${1}
+      SECOND_ARGUMENT=${2}
 
+      if [ $# -eq 1 ]
+      then
+          min=0
+          max=$FIRST_ARGUMENT
+      elif [ $# -eq 2 ]
+      then
+          min=$FIRST_ARGUMENT
+          max=$SECOND_ARGUMENT
+      else
+          min=0
+          max=100
+
+      fi
+
+      guess=$max
+      predicate=1
+
+      while [ $predicate -eq 1 ]
+      do
+          echo "Is your number $guess ? (y, n)"
+          read answer
+          if [ $answer = "y" ]
+          then
+              echo "We found your number $guess"
+              break
+          fi
+
+          echo "Is your number less than $guess y/n"
+          read answer
+          if [ $answer = "y" ]
+          then
+              guess=$(($guess / 2))
+          else
+              guess=$(($guess + $guess / 2))
+          fi
+
+          echo "Is your number greater than $guess y/n"
+          read answer
+          if [ $answer = "y" ]
+          then
+              guess=$(($guess + $guess / 2))
+          else
+              guess=$(($guess / 2))
+          fi
+      done
 
 Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) čísel oddělených mezerou od čísla zadaného jako první argument do čísla zadaného jako třetí argument, obojí včetně, s přírůstkem zadaným jako druhý argument – kladným, pokud je počáteční číslo menší nebo rovno než cílové, jinak záporným. Při dvou argumentech je chybějící přírůstek roven 1, při jednom je i chybějící počáteční číslo rovno 1.
