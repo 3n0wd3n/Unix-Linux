@@ -331,3 +331,44 @@ Naprogramujte hádání (celého) čísla, které si uživatel myslí, z interva
       done
 
 Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) čísel oddělených mezerou od čísla zadaného jako první argument do čísla zadaného jako třetí argument, obojí včetně, s přírůstkem zadaným jako druhý argument – kladným, pokud je počáteční číslo menší nebo rovno než cílové, jinak záporným. Při dvou argumentech je chybějící přírůstek roven 1, při jednom je i chybějící počáteční číslo rovno 1.
+
+      #! /bin/bash
+      FIRST_ARGUMENT=${1}
+      SECOND_ARGUMENT=${2:-"empty"}
+      THIRD_ARGUMENT=${3}
+
+      :'
+      for i in {$FIRST_ARGUMENT..$THIRD_ARGUMENT..$SECOND_ARGUMENT}
+      do
+         echo $i
+      done
+      '
+      array=()
+      if [ $# -eq 1 ]
+      then
+          for (( i = 1; i <= $FIRST_ARGUMENT; i ++ )) 
+          do 
+              array+="$i "
+          done
+      elif [ $FIRST_ARGUMENT -ge $THIRD_ARGUMENT ]
+      then
+          for (( i = $FIRST_ARGUMENT; i >= $THIRD_ARGUMENT; i -=  $SECOND_ARGUMENT)) 
+          do 
+              array+="$i "
+          done
+      elif [ $# -eq 2 ]
+      then
+          for (( i = $FIRST_ARGUMENT; i <= $SECOND_ARGUMENT; i ++ )) 
+          do 
+              array+="$i "
+          done
+      elif [ $# -ne 2 ]
+      then
+          for (( i = $FIRST_ARGUMENT; i <= $THIRD_ARGUMENT; i += $SECOND_ARGUMENT )) 
+          do 
+              array+="$i "
+          done
+      else
+          echo "Something went wrong"
+      fi
+      echo $array
