@@ -1,5 +1,5 @@
 # Unix-Linux
-  an UPOL pre-exam repositor for my summmary
+  an UPOL pre-exam repositor for my summmary (also for semminar called programming in unix shell)
   
   https://vyjidacek.cz/unix/
   
