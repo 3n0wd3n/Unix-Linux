@@ -372,3 +372,21 @@ Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) �
           echo "Something went wrong"
       fi
       echo $array
+      
+Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při výpisu ls
+
+      #! /bin/bash
+
+      tmp=$(ls -l)
+      counter=0
+
+      for i in $tmp
+      do
+            # echo $i | grep "michal"
+            if [ $i == "michal" ]
+            then
+                  let counter++
+            fi
+      done
+
+      echo $counter
