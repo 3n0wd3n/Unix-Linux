@@ -282,6 +282,61 @@ Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argu
       stat * --format=%n\ %N
       stat * --format=%n\ %F
       : '
+      
+Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií (pouze!) dotazů je menší/větší než X? s odpověďmi a/n algoritmem půlení intervalu. Při jednom argumentu je levá mez intervalu 0, při žádném navíc pravá 100.
+
+      #!/bin/bash
+      FIRST_ARGUMENT=${1}
+      SECOND_ARGUMENT=${2}
+
+      if [ $# -eq 1 ]
+      then
+          min=0
+          max=$FIRST_ARGUMENT
+      elif [ $# -eq 2 ]
+      then
+          min=$FIRST_ARGUMENT
+          max=$SECOND_ARGUMENT
+      else
+          min=0
+          max=100
+      fi
+
+      counter=0
+
+      while true
+      do
+          if [ $max -lt $min ]
+          then
+              break
+          fi
+
+          med=$(($min + $(($(($max - $min)) / 2))))
+
+          echo "Is your number smaller than $med ? (y, n)"
+          read answer
+          if [ $answer == "y" ]
+          then
+              max=$(($med - 1))
+          else
+              counter=$(($counter + 1))
+          fi
+          echo "Is your number bigger than $med ? (y, n)"
+          read answer
+          if [ $answer == "y" ]
+          then
+              min=$(($med + 1))
+          else
+              counter=$(($counter + 1))
+          fi
+
+          if  [ $counter -eq 2 ]
+          then 
+              echo "We found your number $med"
+                  break
+          fi
+          counter=0
+      done
 
 Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií dotazů je menší/větší než X? algoritmem půlení intervalu. Při jednom argumentu je první číslo 0, při žádném navíc druhé 100.
 
