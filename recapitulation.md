@@ -332,58 +332,64 @@ Naprogramujte hádání (celého) čísla, které si uživatel myslí, z interva
 
 Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) čísel oddělených mezerou od čísla zadaného jako první argument do čísla zadaného jako třetí argument, obojí včetně, s přírůstkem zadaným jako druhý argument – kladným, pokud je počáteční číslo menší nebo rovno než cílové, jinak záporným. Při dvou argumentech je chybějící přírůstek roven 1, při jednom je i chybějící počáteční číslo rovno 1.
 
-      #! /bin/bash
-      FIRST_ARGUMENT=${1}
-      SECOND_ARGUMENT=${2:-"empty"}
-      THIRD_ARGUMENT=${3}
+        #! /bin/bash
+        FIRST_ARGUMENT=${1}
+        SECOND_ARGUMENT=${2:-"empty"}
+        THIRD_ARGUMENT=${3}
 
-      if [ -z "$1" ]
-      then echo "You have not input anything"
-      else
-      array=()
-          if [ $# -eq 1 ]
-          then
-              for (( i = 1; i <= $FIRST_ARGUMENT; i ++ )) 
-              do 
-                  array+="$i "
-              done
-          elif [ $FIRST_ARGUMENT -ge $THIRD_ARGUMENT ]
-          then
-              for (( i = $FIRST_ARGUMENT; i >= $THIRD_ARGUMENT; i -=  $SECOND_ARGUMENT)) 
-              do 
-                  array+="$i "
-              done
-          # elif [ $# -eq 2 ] && [$FIRST_ARGUMENT -gt $SECOND_ARGUMENT]
-          # then
-          #     for (( i = $FIRST_ARGUMENT; i >= $SECOND_ARGUMENT; i -- )) 
-          #     do 
-          #         array+="$i "
-          #     done
-          elif [ $# -eq 2 ]
-          then
-              for (( i = $FIRST_ARGUMENT; i <= $SECOND_ARGUMENT; i ++ )) 
-              do 
-                  array+="$i "
-              done
-          elif [ $# -ne 2 ]
-          then
-              for (( i = $FIRST_ARGUMENT; i <= $THIRD_ARGUMENT; i += $SECOND_ARGUMENT )) 
-              do 
-                  array+="$i "
-              done
-          else
-              echo "Something went wrong"
-          fi
-      fi
+        if [ -z "$1" ]
+        then echo "You have not input anything"
+        else
+        array=()
+            if [ $# -eq 1 ]
+            then
+                for (( i = 1; i <= $FIRST_ARGUMENT; i ++ )) 
+                do 
+                    array+="$i "
+                done
+            elif [ $# -eq 2 -a $FIRST_ARGUMENT -ge $SECOND_ARGUMENT ]
+            then
+                for (( i = $FIRST_ARGUMENT; i >= $SECOND_ARGUMENT; i -- )) 
+                do 
+                    array+="$i "
+                done
+            elif [ $FIRST_ARGUMENT -ge $THIRD_ARGUMENT ]
+            then
+                for (( i = $FIRST_ARGUMENT; i >= $THIRD_ARGUMENT; i -=  $SECOND_ARGUMENT)) 
+                do 
+                    array+="$i "
+                done
+            elif [ $# -eq 2 ]
+            then
+                for (( i = $FIRST_ARGUMENT; i <= $SECOND_ARGUMENT; i ++ )) 
+                do 
+                    array+="$i "
+                done
+            elif [ $# -ne 2 ]
+            then
+                for (( i = $FIRST_ARGUMENT; i <= $THIRD_ARGUMENT; i += $SECOND_ARGUMENT )) 
+                do 
+                    array+="$i "
+                done
+            else
+                echo "Something went wrong"
+            fi
+        fi
 
-      echo $array
+        echo $array
 
-      : '
-      for i in {$FIRST_ARGUMENT..$THIRD_ARGUMENT..$SECOND_ARGUMENT}
-      do
-         echo $i
-      done
-      : '
+        : '
+        for i in {$FIRST_ARGUMENT..$THIRD_ARGUMENT..$SECOND_ARGUMENT}
+        do
+           echo $i
+        done
+        : '
+
+        : '
+        ./test.sh 1 -4 20
+
+        ./test.sh 1 -100
+        : '
       
 Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při výpisu ls
 
