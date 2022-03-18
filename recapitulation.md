@@ -300,38 +300,34 @@ Naprogramujte hádání (celého) čísla, které si uživatel myslí, z interva
       else
           min=0
           max=100
-
       fi
 
       guess=$max
-      predicate=1
 
-      while [ $predicate -eq 1 ]
+      while true
       do
-          echo "Is your number $guess ? (y, n)"
-          read answer
-          if [ $answer = "y" ]
+          if [ $max -lt $min ]
           then
-              echo "We found your number $guess"
               break
           fi
 
-          echo "Is your number less than $guess y/n"
+          med=$(($min + $(($(($max - $min)) / 2))))
+
+          echo "Is your number $med ? (y, n)"
           read answer
-          if [ $answer = "y" ]
+          if [ $answer == "y" ]
           then
-              guess=$(($guess / 2))
-          else
-              guess=$(($guess + $guess / 2))
+              echo "We found your number $med"
+              break
           fi
 
-          echo "Is your number greater than $guess y/n"
+          echo "Is your number smaller ? (y, n)"
           read answer
-          if [ $answer = "y" ]
+          if [ $answer == "y" ]
           then
-              guess=$(($guess + $guess / 2))
+              max=$(($med - 1))
           else
-              guess=$(($guess / 2))
+              min=$(($med + 1))
           fi
       done
 
