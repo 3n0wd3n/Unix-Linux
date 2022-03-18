@@ -337,41 +337,53 @@ Implementujte zjednodušenou verzi programu seq: výpis posloupnosti (celých) �
       SECOND_ARGUMENT=${2:-"empty"}
       THIRD_ARGUMENT=${3}
 
-      :'
+      if [ -z "$1" ]
+      then echo "You have not input anything"
+      else
+      array=()
+          if [ $# -eq 1 ]
+          then
+              for (( i = 1; i <= $FIRST_ARGUMENT; i ++ )) 
+              do 
+                  array+="$i "
+              done
+          elif [ $FIRST_ARGUMENT -ge $THIRD_ARGUMENT ]
+          then
+              for (( i = $FIRST_ARGUMENT; i >= $THIRD_ARGUMENT; i -=  $SECOND_ARGUMENT)) 
+              do 
+                  array+="$i "
+              done
+          # elif [ $# -eq 2 ] && [$FIRST_ARGUMENT -gt $SECOND_ARGUMENT]
+          # then
+          #     for (( i = $FIRST_ARGUMENT; i >= $SECOND_ARGUMENT; i -- )) 
+          #     do 
+          #         array+="$i "
+          #     done
+          elif [ $# -eq 2 ]
+          then
+              for (( i = $FIRST_ARGUMENT; i <= $SECOND_ARGUMENT; i ++ )) 
+              do 
+                  array+="$i "
+              done
+          elif [ $# -ne 2 ]
+          then
+              for (( i = $FIRST_ARGUMENT; i <= $THIRD_ARGUMENT; i += $SECOND_ARGUMENT )) 
+              do 
+                  array+="$i "
+              done
+          else
+              echo "Something went wrong"
+          fi
+      fi
+
+      echo $array
+
+      : '
       for i in {$FIRST_ARGUMENT..$THIRD_ARGUMENT..$SECOND_ARGUMENT}
       do
          echo $i
       done
-      '
-      array=()
-      if [ $# -eq 1 ]
-      then
-          for (( i = 1; i <= $FIRST_ARGUMENT; i ++ )) 
-          do 
-              array+="$i "
-          done
-      elif [ $FIRST_ARGUMENT -ge $THIRD_ARGUMENT ]
-      then
-          for (( i = $FIRST_ARGUMENT; i >= $THIRD_ARGUMENT; i -=  $SECOND_ARGUMENT)) 
-          do 
-              array+="$i "
-          done
-      elif [ $# -eq 2 ]
-      then
-          for (( i = $FIRST_ARGUMENT; i <= $SECOND_ARGUMENT; i ++ )) 
-          do 
-              array+="$i "
-          done
-      elif [ $# -ne 2 ]
-      then
-          for (( i = $FIRST_ARGUMENT; i <= $THIRD_ARGUMENT; i += $SECOND_ARGUMENT )) 
-          do 
-              array+="$i "
-          done
-      else
-          echo "Something went wrong"
-      fi
-      echo $array
+      : '
       
 Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při výpisu ls
 
