@@ -277,6 +277,11 @@ Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argu
           CURRENT_DIRECTORIE=$(pwd)
           ls -lR $CURRENT_DIRECTORIE
       fi
+      
+      : '
+      stat * --format=%n\ %N
+      stat * --format=%n\ %F
+      : '
 
 Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií dotazů je menší/větší než X? algoritmem půlení intervalu. Při jednom argumentu je první číslo 0, při žádném navíc druhé 100.
 
