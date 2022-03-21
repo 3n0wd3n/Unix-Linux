@@ -1,5 +1,5 @@
 
-#Programování v unixovém shellu - úkoly
+**Programování v unixovém shellu - úkoly**
 
 Spusťte aplikaci emulace terminálu (Terminál, Konsole apod.). Následující provádějte v této aplikaci (terminálu).
 
