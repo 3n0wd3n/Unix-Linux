@@ -285,6 +285,9 @@ Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argu
       
 Naprogramujte hádání (celého) čísla, které si uživatel myslí, z intervalu zadaného až dvěma argumenty, sérií (pouze!) dotazů je menší/větší než X? s odpověďmi a/n algoritmem půlení intervalu. Při jednom argumentu je levá mez intervalu 0, při žádném navíc pravá 100.
 
+[PŮLENÍ INTERVALŮ](https://cs.wikipedia.org/wiki/P%C5%AFlen%C3%AD_interval%C5%AF)
+[BINÁRNÍ VYHLEDÁVÁNÍ](https://cs.wikipedia.org/wiki/Bin%C3%A1rn%C3%AD_vyhled%C3%A1v%C3%A1n%C3%AD)
+
       #!/bin/bash
       FIRST_ARGUMENT=${1}
       SECOND_ARGUMENT=${2}
@@ -462,3 +465,15 @@ Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při 
       done
 
       echo $counter
+
+Napište funkce vracející (vypisující)
+
+číslo zadané jako argument v poziční číselné soustavě o základu 2 až 64 (cifry jsou 0-9, a-z, A-Z, @ a _) v desítkové soustavě,
+zápis čísla zadaného jako argument v desítkové soustavě v soustavě o základu 2 až 64 (...).
+Základ soustavy je zadaný jako druhý argument, při chybějícím 2.
+
+[POZIČNÍ ČÍSELNÁ SOUSTAVA](https://cs.wikipedia.org/wiki/Pozi%C4%8Dn%C3%AD_%C4%8D%C3%ADseln%C3%A1_soustava)
+[BASE64](https://cs.wikipedia.org/wiki/Base64) 
+[HOW TO BASE 64](https://linuxhint.com/bash_base64_encode_decode/)
+
+Implementujte jako funkce (zjednodušené) programy dirname a basename: z cesty zadané jako argument, po odebrání případného / na konci, vrátí (vypíše) část do (dirname), resp. od (basename) posledního / (bez něj, pokud to není jediný znak). Pokud cesta / neobsahuje, dirname vrátí . (tečku) a basename celé jméno.
