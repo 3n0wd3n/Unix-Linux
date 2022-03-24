@@ -23,4 +23,4 @@
     
 # Home
 
-    /mnt/c/Users/Michal/Desktop
+    cd /mnt/c/Users/Michal/Desktop
