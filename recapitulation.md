@@ -549,3 +549,67 @@ Základ soustavy je zadaný jako druhý argument, při chybějícím 2.
 [HOW TO BASE 64](https://linuxhint.com/bash_base64_encode_decode/)
 
 Implementujte jako funkce (zjednodušené) programy dirname a basename: z cesty zadané jako argument, po odebrání případného / na konci, vrátí (vypíše) část do (dirname), resp. od (basename) posledního / (bez něj, pokud to není jediný znak). Pokud cesta / neobsahuje, dirname vrátí . (tečku) a basename celé jméno.
+
+      #!/bin/bash
+
+      path=$1
+
+      IFS='/'
+
+      read -ra arr <<< $path
+
+      #echo ${#arr[@]}
+      function dirname(){
+          array=()
+          IFS=''
+          if [ ${#arr[@]} -eq 2 ]
+          then
+              breaker=$((${#arr[@]} - 1))
+              for (( i = 0; i <= $((${#arr[@]} - 1)); i ++ )) 
+              do
+                  if [ $breaker -eq $i ]
+                  then
+                      array+="${arr[i]}"
+                  else
+                      array+="${arr[i]}"
+                      array+="/"
+                  fi
+              done
+          else
+              breaker=$((${#arr[@]} - 2))
+              for (( i = 0; i <= $((${#arr[@]} - 2)); i ++ )) 
+              do
+                  if [ $breaker -eq $i ]
+                  then
+                      array+="${arr[i]}"
+                  else
+                      array+="${arr[i]}"
+                      array+="/"
+                  fi
+              done
+          fi
+          echo $array
+      }
+
+      function basename(){
+          array=()
+          IFS=''
+          breaker=$((${#arr[@]} - 1))
+          for (( i = 0; i <= $((${#arr[@]} - 1)); i ++ )) 
+          do
+              if [ $breaker -eq $i ]
+              then
+                  array+="${arr[i]}"
+              fi
+          done
+          echo $array
+      }
+
+      if [ "$path" == "/" ]
+      then 
+          echo "."
+      else
+          dirname 
+          basename
+      fi
+
