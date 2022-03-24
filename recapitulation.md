@@ -469,6 +469,8 @@ Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při 
       
 Napište script který vezme od cestu uživatele a rozseká ji na slova, která se vypíši pod sebou na výstup
 
+![sepparating](https://user-images.githubusercontent.com/47132583/160001994-c5e54c9b-d93c-402f-b807-2f6ce1795b58.png)
+
       #!/bin/bash
 
       path=$1
