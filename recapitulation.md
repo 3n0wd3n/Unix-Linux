@@ -466,6 +466,63 @@ Napiš bash script, který bude počítat kolikrat se vyskytlo vaše jmeno při 
       done
 
       echo $counter
+      
+Napište script který vezme od cestu uživatele a rozseká ji na slova, která se vypíši pod sebou na výstup
+
+      #!/bin/bash
+
+      path=$1
+      
+      # oddělovač
+      IFS='/'
+      
+      # nahraje oddělená slovo do pole
+      read -ra arr <<< $path
+      
+      # délka pole --> echo ${#arr[@]}
+      
+      for val in "${arr[@]}";
+      do
+        echo $val
+      done
+      
+      LZE I TAKTO
+      
+      #!/bin/bash
+
+      path=$1
+      
+      # oddělovač
+      IFS='/'
+      
+      # nahraje oddělená slovo do pole
+      read -ra arr <<< $path
+      
+      # délka pole --> echo ${#arr[@]}
+      
+      for val in "${arr[@]}";
+      do
+        printf "$val\n"
+      done
+      
+      LZE I TAKTO
+      
+      #!/bin/bash
+
+      path=$1
+      
+      # oddělovač
+      IFS='/'
+      
+      # nahraje oddělená slovo do pole
+      read -ra arr <<< $path
+      
+      # délka pole --> echo ${#arr[@]}
+      
+      for (( i = 0; i <= ${#arr[@]}; i ++ )) 
+      do
+        printf "${arr[i]}\n"
+      done      
 
 Napište funkce vracející (vypisující)
 
