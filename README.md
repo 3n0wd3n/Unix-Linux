@@ -20,3 +20,7 @@
     $ ssh hajnym@phoenix.inf.upol.cz
   
     $ password: ********
+    
+# Home
+
+    /mnt/c/Users/Michal/Desktop
