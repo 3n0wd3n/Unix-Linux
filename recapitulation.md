@@ -522,8 +522,18 @@ Napište script který vezme od cestu uživatele a rozseká ji na slova, která 
       for (( i = 0; i <= ${#arr[@]}; i ++ )) 
       do
         printf "${arr[i]}\n"
-      done      
-
+      done     
+      
+Napište funkci vracející vaše jméno
+      
+      #!/bin/bash
+      name=$1
+      function name(){
+            echo "Your name is" $1
+      }
+      
+      name "$name"
+      
 Napište funkce vracející (vypisující)
 
 číslo zadané jako argument v poziční číselné soustavě o základu 2 až 64 (cifry jsou 0-9, a-z, A-Z, @ a _) v desítkové soustavě,
