@@ -630,12 +630,10 @@ LEPŠÍ MOŽNOST
 
       IFS='/'
 
-      #!/bin/bash
-
       STR=$path
       SUB='/'
       if [[ "$STR" == *"$SUB"* ]]; then
-          # echo "It's there."
+          # echo "Forward slash it's there."
           tmp=1
       else
           tmp=0
