@@ -622,3 +622,81 @@ https://linuxize.com/post/how-to-check-if-string-contains-substring-in-bash/
       
 ![outputs](https://user-images.githubusercontent.com/47132583/160065539-e604893e-fb1e-4b62-ae42-f354ea863938.png)
 
+LEPŠÍ MOŽNOST
+
+      #!/bin/bash
+
+      path=$1
+
+      IFS='/'
+
+      #!/bin/bash
+
+      STR=$path
+      SUB='/'
+      if [[ "$STR" == *"$SUB"* ]]; then
+          # echo "It's there."
+          tmp=1
+      else
+          tmp=0
+      fi
+
+      read -ra arr <<< $path
+      # echo ${#arr[@]}
+
+      function dirname(){
+          array=()
+          IFS=''
+          if [ ${#arr[@]} -eq 1 -a $tmp -eq 1 ]
+          then
+              array="/"
+          elif [ ${#arr[@]} -eq 2 ]
+          then
+              array="/"
+          elif [ ${#arr[@]} -eq 1 -a $tmp -eq 0 ]
+          then
+              array="."
+          else
+              breaker=$((${#arr[@]} - 2))
+              for (( i = 0; i <= $((${#arr[@]} - 2)); i ++ )) 
+              do
+                  if [ $breaker -eq $i ]
+                  then
+                      array+="${arr[i]}"
+                  else
+                      array+="${arr[i]}"
+                      array+="/"
+                  fi
+              done
+          fi
+          echo $array
+      }
+
+      function basename(){
+          array=()
+          IFS=''
+          if [ ${#arr[@]} -eq 1 -a $tmp -eq 1 ]
+          then
+              array+="/"
+          else
+              breaker=$((${#arr[@]} - 1))
+              for (( i = 0; i <= $((${#arr[@]} - 1)); i ++ )) 
+              do
+                  if [ $breaker -eq $i ]
+                  then
+                      array+="${arr[i]}"
+                  fi
+              done
+          fi
+          echo $array
+      }
+
+
+      if [  $# -eq 0 ]
+      then
+          echo "You did not input anything"
+      else
+          dirname 
+          basename
+      fi
+
