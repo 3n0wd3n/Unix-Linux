@@ -605,11 +605,18 @@ Implementujte jako funkce (zjednodušené) programy dirname a basename: z cesty 
           echo $array
       }
 
-      if [ "$path" == "/" ]
-      then 
-          echo "."
+      if [  $# -eq 0 ]
+      then
+          echo "You did not input anything"
       else
-          dirname 
-          basename
+          if [ "$path" == "/" ]
+          then 
+              echo "."
+          else
+              dirname 
+              basename
+          fi
       fi
+      
+![outputs](https://user-images.githubusercontent.com/47132583/160065539-e604893e-fb1e-4b62-ae42-f354ea863938.png)
 
