@@ -550,6 +550,8 @@ Základ soustavy je zadaný jako druhý argument, při chybějícím 2.
 
 Implementujte jako funkce (zjednodušené) programy dirname a basename: z cesty zadané jako argument, po odebrání případného / na konci, vrátí (vypíše) část do (dirname), resp. od (basename) posledního / (bez něj, pokud to není jediný znak). Pokud cesta / neobsahuje, dirname vrátí . (tečku) a basename celé jméno.
 
+https://linuxize.com/post/how-to-check-if-string-contains-substring-in-bash/
+
       #!/bin/bash
 
       path=$1
