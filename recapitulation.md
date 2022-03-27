@@ -548,6 +548,27 @@ Základ soustavy je zadaný jako druhý argument, při chybějícím 2.
 
 [HOW TO BASE 64](https://linuxhint.com/bash_base64_encode_decode/)
 
+      #!/bin/bash
+
+      number=$1
+      base=$2
+      count=$#
+
+      function base(){
+
+          if [ $1 -eq 1 ]
+          then
+              echo $((2#$number))
+          elif [ $1 -eq 2 ]
+          then
+              echo $(($base#$number))
+          else
+              echo "You did not input anything"
+          fi
+      }
+
+      base "$count"
+
 Implementujte jako funkce (zjednodušené) programy dirname a basename: z cesty zadané jako argument, po odebrání případného / na konci, vrátí (vypíše) část do (dirname), resp. od (basename) posledního / (bez něj, pokud to není jediný znak). Pokud cesta / neobsahuje, dirname vrátí . (tečku) a basename celé jméno.
 
 https://linuxize.com/post/how-to-check-if-string-contains-substring-in-bash/
