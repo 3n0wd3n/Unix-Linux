@@ -1,0 +1,775 @@
+
+                           Unixove systemy a shell
+
+                                 Jan Outrata
+
+                            únor-duben 2014-2015
+
+GNU texutils
+------------
+
+- obsah souboru: cat -n, tac, rev, head -n -1, tail -n +1 -f, wc -cmlw
+
+- třídění řádků, sloupce: sort -fnrukt, uniq -iu, cut -bcdf N-M, paste -d
+
+- rozdíly v souborech: diff -quyrNi, patch -iop
+
+
+- filtrace řádků dle vzoru: grep -EefivclqABCr, [bz,lz,xz,z,zip][e,f]grep, rgrep
+
+Regulární výrazy (RE)
+---------------------
+
+= vzor popisující množinu (vyhovujících) řetězců
+
+- základní POSIX (BRE), rozšířené POSIX (ERE) a perlovské (PCRE), man
+7 regex, pcre
+
+- znak: jakýkoliv ., potlačení spec. významu metaznaku za \
+(\.[]^$?*+{}|()), \t tabulátor, \n nový řádek, ze seznamu mezi [] -
+negace pokud první ^, rozsah - (lokalizace!), třídy
+[:alnum:],[:alpha:],[:blank:],[:digit:],[:lower:],[:upper:],[:print:],[:space:]
+aj. (lokalizace!), ] jako první, ^ jako ne první, - jako poslední
+
+- ^ prázdný řetězec na začátku řádku, $ na konci, \< na začátku slova,
+\> na konci, \y obojí, \b na hranici, \B ne na hranici, \w =
+[_[:alnum:]], \W = [^_[:alnum:]], \s = [[:space:]], \S = [^[:space:]],
+\d = [[:digit:]], \D = [^[:digit:]]
+
+- opakování: za RE ? 1-, * libovolněkrát, + 1+, {n} n-krát, {n,} n+,
+{n,m} n-m (n <= m)
+
+- zřetezení: RE za sebou, vyhovuje zřetězení vyhovujících řetězců
+
+- volba: RE|RE, vyhovuje kterýkoliv vyhovující
+
+- priority: opakování > zřetězení > volba, () - podvýraz
+
+- podvýrazy: (), reference \n - n číslice podvýrazu, vyhovuje
+podřetězec vyhovující n-tému podvýrazu
+
+- BRE: ?, +, {, }, |, (, ) s \ pro spec. význam
+
+Programování v shellu (BASH) -- základy
+---------------------------------------
+
+- GNU BASH (Bourne-Again SHell) = příkazový interpret, programovací
+jazyk pro vykonávání příkazů ze vstupu, jako parametrů nebo ze souboru
+(včetně spouštění programů), dle části POSIX
+
+- komentář: # do zbytku řádku
+
+- bílý znak: mezera nebo tabulátor
+
+- slovo: posloupnost (ne bílých a meta-) znaků jako celek, rezervovaná
+pro příkazy dále, expanze {} - viz dále, proměnných a parametrů
+(hodnot) - viz dále, substituce vyhodnocení aritmetického výrazu a
+výstupu příkazu - viz dále, expanze ~ a cesty (jmen souborů a
+adresářů), odstranění kvótování - viz dále
+
+- jméno: slovo z písmen, číslic a _, nezačínající číslicí
+
+- metaznak = oddělovač slov: | & ; ( ) < > mezera tabulátor nový řádek
+
+- řídící operátor: || & && ; ;; ;& ;;& ( ) | |& nový řádek
+
+- příkaz: bílými znaky oddělená slova a přesměrování, ukončený řídícím
+operátorem, první slovo (program) se vykoná (spustí) s návratovou
+hodnotou (nebo 128+číslo signálu), ostatní argumenty
+
+- přesměrování: vstupu a výstupů příkazu před vykonáním, kdekoliv v
+příkazu (obvykle na konci), vstupu ze souboru <, výstupu do
+(přepsaného) souboru >, přidání >>, i chybového &> (&>>) nebo >&, za
+<, > aj. slovo = jméno souboru
+
+- kolona: posloupnost příkazů oddělených | nebo |&, std. výstup (při
+|& (zkratka za 2>&1 |) i chybový, nakonec) příkazu nalevo propojený se
+std. vstupem příkazu napravo, před přesměrováními, návratová hodnota
+posledního, každý příkaz samostatný proces ("podshell")
+
+- seznam: posloupnost kolon oddělených ;, &, && nebo ||, volitelně
+ukončený &, ; nebo novým řádkem, ne & vykonání za sebou, návratová
+hodnota posledního, & asynchronně na pozadí v "podshellu" (viz dále),
+návratová hodnota 0, kolona1 ||(&&) kolona2 - kolona2 se vykoná jen
+když kolona1 (ne)selže = návratová hodnota nenulová(0), návratová
+hodnota posledního vykonaného, dále příkazy = seznam
+
+- seskupování příkazů: { příkazy; } = skupina (i nový řádek místo ;,
+metaznaky kolem příkazů!), (příkazy) = vykonání v "podshellu" -
+přiřazení (překrytých) proměnných jen v něm, přesměrování celé
+skupiny, substituce (jako bílými znaky oddělená slova, bez konců řádků
+na konci) výstupu příkazů $(příkazy) nebo `příkazy`, návratová hodnota
+příkazů
+
+- proměnné: automatické, přiřazení hodnoty jméno=výraz (i prázdný),
+výraz bílými znaky oddělená slova, v '' nebo "" nebo znak za \ pro
+potlačení spec. významu metaznaků, ', " a $, `, \ (ne v ""), += pro
+přidání, hodnota (expanze) $jméno nebo ${jméno} řetězec nebo číslo,
+proměnné shellu např. BASH_COMMAND, HOSTNAME, HISTFILE
+(~/.bash_history), HISTSIZE, HISTFILESIZE, OLDPWD, PWD, RANDOM
+(0-32767), SRANDOM (32bit), HOME, PATH (seznam adresářů oddělený : pro
+hledání programů při spuštění, výchozí neobsahuje akt. adresář!), PS1,
+UID, lokalizační (LANG, LC_*) aj.
+
+- podmínky: if příkazy1; then příkazy2; elif příkazy1; then příkazy2;
+else příkazy3; fi - vykonání příkazy2 pokud příkazy1 "pravdivé" =
+pokud návratová hodnota 0, jinak vykonání příkazy3, test výraz nebo [
+výraz ], [[ výraz ]], pravdivý výraz = návratová hodnota 0, jinak 1,
+výrazy slova, -adefhrswxL/aj. soubor, soubor -nt/ot soubor, -v
+proměnná, -zn řetězec, == = != < > pro řetězce (oddělené bílými
+znaky!), -eq/ne/lt/le/gt/ge pro čísla, u [[ ]] za ==, != vzor, za =~
+ERE, < > třídí dle lokalizace, ve výraz (), !, &&/-a, ||/-o, case
+slovo in vzor|vzor|...) příkazy;; ... esac - vykonání příkazů pokud
+slovo odpovídá nějakému vzoru, při ;& (;;&) místo ;; (test a )
+vykonání příkazů dalších vzorů
+
+- cykly: for jméno in slova; do příkazy; done - vykonání příkazů s
+proměnnou jméno nastavenou postupně na slova, while/until příkazy1; do
+příkazy2; done - vykonávání příkazy2 dokud příkazy1 "/nepravdivé"
+(while/until)
+
+- celočíselná aritmetika: ((výraz)) nebo let "výraz" ..., výrazy (jako
+v C) proměnné, () ++ -- ! ~ ** * / % + - << >> <= => < > == != & ^ |
+&& || ?: = *= apod. ,, hodnota proměnné i bez $ (prázdná = 0),
+nenulový výraz = návratová hodnota 0, jinak 1, substituce (jako slovo)
+vyhodnocení výrazu $((výraz)) ($[výraz] zastaralé, i vnořené), for
+((výraz1; výraz2; výraz3)); do příkazy; done - vyhodnocení výraz1,
+opakovaně vyhodnocení výraz2 dokud ne nulový a vykonání příkazů a
+vyhodnocení výraz3, při neuvedení výraz[1-3] je tento 1
+
+- funkce: jméno () skupina, function jméno skupina - vykonání skupiny
+s (pozičními) parametry zavoláním jméno argumenty jako příkazu, jméno
+slovo bez $, hodnota (expanze) parametru ${nenulové číslo} (0-9 i bez
+{}), počet $#, všechny jako slova $@, $* (v "" jako jedno slovo se
+slovami oddělenými mezerou!)
+
+- skript: program v (prog. jazyku) shellu, pro spuštění jako program
+první řádek #!/cesta/k/shellu parametry (např. #!/bin/bash), argumenty
+a parametry jako u funkce, jméno skriptu $0 (nebo příkazu nebo
+programu Bash = proměnná BASH)
+
+- bash skript argumenty, skript cesta nebo v akt. adresáři nebo v
+adresáři v PATH, bash -c příkazy argumenty, bash -s argumenty a
+příkazy ze std. vstupu, -x tisk příkazů, návratová hodnota posledního
+příkazu (nebo 0)
+
+- příkazy:
+
+cd dir - změní akt. adresář na dir (nebo HOME), - = OLDPWD
+
+pwd - vypíše (absolutní) cestu k akt. adresáři
+
+fg/bg id ... - přesune /pozastavené úlohy s id (nebo poslední) na
+popředí/pozadí (jako s &)
+
+jobs -lrs id ... - vypíše úlohy s id (nebo všechny), -l i PID, -r jen
+běžící, -s jen pozastavené
+
+kill -sn signal PID | id ... - pošle signal (nebo TERM) procesům s PID
+nebo id, -l výpis signálů
+
+help vzor - zobrazí nápovědu k příkazům odpovídajícím vzoru (nebo
+všem), -d/s stručné
+
+./source skript argumenty - vykoná skript s parametry, případně
+využije PATH a pak hledá i v akt. adresáři
+
+break/continue n - ukončí n (nebo poslední) nejvnitřnějších
+cyklů/pokračuje další iterací n-tého (nebo posledního) nejvnitřnějšího
+cyklu
+
+echo -neE argumenty - vypíše argumenty oddělené mezerou + nový řádek
+pokud ne -n, s -e (-E potlačí) escape sekvence \abceEfnrtv\'"?0xuU
+
+eval argumenty - vykoná zřetězené argumenty jako příkaz
+
+exit n - ukončí shell s návratovou hodnotou n (nebo posledního
+příkazu), pro login shell (viz dále) ještě logout
+
+export -n jméno=výraz ... - exportuje proměnné s hodnotou výraz (s -f
+funkce) spuštěným příkazům a do "podshellu", bez jmen nebo s -p
+exportované vypíše, při -n zruší export
+
+local jméno=výraz ... - vytvoří proměnnou s hodnotou jako lokální ve
+funkci (a funkcí z ní volaných), bez jmen lokální vypíše
+
+read jména - načte řádek ze vstupu a přiřadí slova proměnným
+(poslední zbytek řádku, případně prázdná, \ pro potlačení spec.
+významu znaků pokud ne -r) nebo proměnné REPLY, -d oddělovač místo
+nového řádku, -n počet znaků maximálně, -N počet znaků jako jedno
+slovo, -p prompt (bez nového řádku) na chybový výstup při čtení z
+terminálu, -s pro nevypisování znaků při čtení z terminálu, -t čas s
+pro čtení z terminálu nebo roury, vrací 0, při konci souboru nebo
+vypršení času nenulové číslo
+
+return n - ukončí funkci nebo skript vykonávaný přes ./source s
+návratovou hodnotou n nebo posledního příkazu
+
+shift n - "posune" parametry o n (>= 0, <= $#) nebo 1 míst doleva,
+zbývající vynuluje
+
+Programování v shellu (BASH) -- pokročilé
+-----------------------------------------
+
+- login shell: -l, při startu interpretovány /etc/profile a první z
+~/.bash_profile, ~/.bash_login, ~/.profile, při ukončení
+~/.bash_logout
+
+- interaktivní shell: bez skriptu a -c nebo -i, při startu
+interpretovány /etc/bash.bashrc a ~/.bashrc (i při ssh), $- = i (viz
+dále)
+
+- neinteraktivní shell: skript nebo -c, při startu provedeno .
+"$BASH_ENV"
+
+- příkaz může na začátku obsahovat přiřazení proměnným pouze pro
+příkaz, negaci návratové hodnoty !, před kolonou time - výpis časů
+trvání (user, system, total)
+
+- další přesměrování: vstupu ze vstupu shellu dokud ne řádek
+obsahující jen konec <<slovo vstup konec (slovo ne expanze, pro vstup
+expanze), vstupu jako slovo plus nový řádek <<<slovo, před <, > aj.
+volitelně číslo (0 = /dev/stdin = vstup při prvním znaku <, 1 =
+/dev/stdout = výstup při >, další 2 = /dev/stderr, X = /dev/fd/X),
+kopie vstupu/výstupu z/do (deskriptoru) X <&X/>&X, X z i do souboru
+X<>slovo, místo čísla i {jméno} použitelné i po příkazu
+
+- select jméno in slova; do příkazy; done - opakovaně výpis slov s
+čísly na chybový výstup, za prompt v PS3 zadání a načtení čísla
+(volby, také do proměnné REPLY), vykonání příkazů s proměnnou jméno
+nastavenou na slovo s číslem (nebo nic), dokud není načten EOF nebo
+break
+
+- kvótování (= potlačení speciálního významu (meta)znaků a slov): \,
+'' a "", \nový řádek = pokračování řádku, mezi "" zůstává speciální
+význam $,`,\ (za \ jen $,`,",\,nový řádek), $'řetězec' vrací řetězec s
+interpetovanými \znak (viz echo)
+
+- zrušení proměnné: unset jméno
+
+- další speciální proměnné: návratová hodnota posledního příkazu na
+popředí ?, PID shellu $, PID posledního příkazu na pozadí !, IFS -
+oddělovací znaky slov při expanzi slov ze seznamu, viz dále, při read
+nebo v "$*" (první), výchozí mezera, tabulátor a nový řádek, PS1 -
+(primární) prompt pro zadání příkazu, PS2 - prompt pro dokončení
+příkazu (např. na dalším řádku), aj. (např. GLOBIGNORE, LINENO,
+MACHTYPE, OSTYPE, PROMPT_COMMAND, SECONDS, TIMEFORMAT, TMPDIR)
+
+- pole: jednorozměrná, indexovaná (nezápornými celými čísly od 0) nebo
+asociativní (indexovaná texty), indexované automaticky při přiřazení
+proměnné jméno[index]=slovo, index je výraz vyhodnocený na celé
+číslo, záporné se přičítá k maximálnímu indexu + 1 (tj. -1 =
+maximální), asociativní pomocí declare -A jméno (indexovaná -a, i
+local a readonly), přiřazení jméno=([index]=slovo ...), pro indexovaná
+i jméno=(slovo ...), pro asociativní i jméno=(index slovo ...) (také
++=, na další index za maximálním), hodnota prvku ${jméno[index]} (bez
+indexu je tento 0, případné vytvoření prázdného), všechny prvky jako
+slova ${jméno[@]}, ${jméno[*]} (v "" jako jedno slovo se slovami
+oddělenými mezerou!), indexy jako slova ${!jméno[@]}, ${!jméno[*]}
+(...), počet prvků ${#jméno[@]}, ${#jméno[*]}, délka prvku
+${#jméno[index]}, read -a jméno přiřadí slova do indexovaného pole
+jméno
+
+- expanze: {}, ~, proměnných a parametrů ($), substituce vyhodnocení
+aritmetického výrazu, substituce výstupu příkazů, substituce
+vstupu/výstupu příkazů jako jména souboru, expanze slov, expanze cesty
+- pak odstranění kvótování
+
+- expanze {}: prefix{řetězec,...}postfix ({ a , v řetězec za \) nebo
+prefix{0číslo1/znak1..0číslo2/znak2..přírůstek}postfix (0 pro stejnou
+šířku 0čísel, přírůstek výchozí 1 nebo -1) expanduje na seznam
+prefixřetězecpostfix,... nebo prefixčíslo/znakpostfix,... od
+0číslo1/znak1 do 0číslo2/znak2 (znaky lexikograficky), i vnořené,
+prefix ne $
+
+- expanze ~: ~login expanduje na domovský adresář uživatele login nebo
+při jen ~ = $HOME nebo domovský adresář uživatele shellu, ~+ = $PWD,
+~- = $OLDPWD
+
+- expanze proměnných a parametrů ($): $jméno nebo ${jméno}, nepřímá
+expanze ${!jméno} - jméno je jméno proměnné (ne reference), jejíž
+hodnota je jméno expandované proměnné, slovo pokud proměnná/parametr
+nenastavená nebo prázdná (ne bez :) ${jméno:-slovo}, s nastavením
+proměnné ${jméno:=slovo} (ne parametry a speciální proměnné), slovo
+pokud proměnná neprázdná ${jméno:+slovo}, podřetězec hodnoty
+${jméno:offset:délka} (offset a délka čísla, délka nepovinná, offset
+od 0, záporný offset (s mezerou před -) od konce (jako záporný index u
+pole), záporná délka = koncový offset od konce, při jménu @ nebo
+jméno[@/*] délka = počet parametrů/prvků od offset), jména proměnných
+(oddělená mezerou) se jmény začínajícími prefixem ${!prefix@} nebo
+${!prefix*} (v "" ...), délka hodnoty ${#jméno}, počet parametrů ${#@}
+nebo ${#*} (vedle $#), odstraňovaní z ${jméno#vzor}, ${jméno##vzor},
+${jméno%vzor}, ${jméno%%vzor}, nahrazení v ${jméno/vzor/text},
+${jméno//vzor/text} a změna velikosti písmen ${jméno^^vzor},
+${jméno,,vzor} (vzor 1 znak, výchozí ?) v hodnotě proměnné jméno (nebo
+@/* pro parametry a pole[@/*] pro jeho prvky) podle vzoru jako u
+expanze cesty a další
+
+- substituce výstupu příkazů: $(příkazy) nebo `příkazy` (\$,\`,\\),
+$(cat soubor) = $(< soubor), i vnořené, v "" ne expanze slov a cesty
+
+- substituce vstupu/výstupu příkazů jako jména souboru: <(příkazy),
+>(příkazy), příkazy spuštěné na pozadí, jejich výstup/vstup jako jméno
+souboru (argument) pro čtení/zápis
+
+- expanze slov: po expanzi proměnných a parametrů a substituci výstupu
+příkazů a vyhodnocení aritm. výrazu pokud nejsou v "", oddělovací
+znaky (jejich posloupnosti) v proměnné IFS, počáteční a ukončující
+ignorovány, výchozí mezera, tabulátor a nový řádek, při prázdné IFS
+neprobíhá, "" a '' prázdné řetězce
+
+- expanze cesty: ve slově * jakýkoliv řetězec (i prázdný), ? jakýkoliv
+znak, [znaky] jakýkoliv ze znaků pro vzor pro setřízený seznam
+vyhovujících jmen souborů a adresářů, při žádném (a ne volba nullglob,
+jinak odstranění slova) neprovedena, kvótování *, ? a [, znak1-znak2
+rozsah znaků (dle lokalizace), negace rozsahu ! nebo ^ za [, -/[ za [,
+třídy znaků [:třída:] (alnum, aplha, blank, digit, lower, upper aj.),
+volby nocaseglob, dotglob, globstar
+
+- celočíselná aritmetika: 0číslo = osmičkově, 0x nebo 0X šestnáctkově,
+základ#číslo o základu základ od 2 do 64 (cifry nad 9 malá a velká
+písmena, @ a _)
+
+- příkazy:
+
+alias/unalias slovo=text ... - vytvoření/zrušení aliasu = první slovo
+(bez spec. (meta)znaků, / a =) příkazu v interaktivním shellu
+nahrazované za text = kód shellu, při čtení příkazu (seznam, funkce),
+ne vykonávání!, rekurzivně, ale ne sama sebe, pokud poslední znak
+textu bílý, nahrazeno i další slovo příkazu, jen alias (nebo bez =text
+nebo s -p) výpis aliasů
+
+bind - výpis (-p/P, -v/V) nebo nastavení kláves na funkce a proměnných
+v příkazovém řádku (knihovna readline), s -x/X kláves na funkce
+shellu!
+
+declare/typeset jméno=výraz - deklaruje proměnnou (a nastaví hodnotu
+na výraz) a/nebo nastaví její atributy, např. -a indexované pole, -A
+asociativní pole, readonly -r, integer -i pro aritmetické vyhodnocení,
+nameref -n pro referenci na proměnnou (~ jiné jméno, např. na argument
+funkce ref=$1) aj., ve funkci lokální, bez jména nebo s -p výpis
+proměnných, volby i pro local a readonly (jen a/A/p)
+
+dirs/pushd adr/popd - výpis/přidávání/odebírání adresářů ze/do/ze
+zásobníku a nastavení aktuálního adresáře na první (vrchol, pokud ne
+-n), -c výmaz, -p po řádcích
+
+exec příkaz - nahradí shell příkazem (včetně přesměrování)
+
+fc od do - oprava a znovuvykonání (s -l výpis) příkazů od (nebo
+posledního) do (nebo od) z historie, od/do jako prefix posledního
+příkazu nebo číslo (záporné od aktuálního příkazu), -e editor nebo z
+proměnné FCEDIT nebo EDITOR (nebo vi), při -s co=za příkaz (jako od)
+znovuvykonání příkazu s nahrazením každého co za za
+
+getopts volby jméno arg ... - parsování parametrů (nebo argumentů) dle
+voleb = znaky (ne : a ?), následovaný : volba s argumentem (oddělený
+bílým znakem), každé zavolání další volba do proměnné jméno, index
+parametru do proměnné OPTIND a příp. argument volby do proměnné
+OPTARG, po všech nebo neplatné volbě návratová hodnota > 0 (a jméno =
+?)
+
+history n - zobrazení n posledních (nebo všech) příkazů z historie (ze
+souboru v HISTFILE nebo zadaného), -c výmaz celé, -d číslo/od-do výmaz
+příkazu s číslem/od-do (záporné odzadu), -s arg uložení arg, -a/r/w
+přidání/načtení/přepsání souboru
+
+mapfile/readarray pole - načte řádky ze vstupu do (indexovaného) pole
+nebo proměnné MAPFILE, -d oddělovač místo nového řádku, -n počet řádků
+maximálně, -O index od indexu, -s počet bez počtu prvních řádků, -t
+bez oddělovače
+
+printf format args - vypíše formátované args nebo s -v jméno uloží do
+proměnné, format dle printf v C (včetně escape sekvcencí dle echo pro
+%b)
+
+set/unset - výpis proměnných shellu, nastavení/zrušení atributů
+shellu, nastavení proměnných a parametrů, zrušení funkce (-f)
+
+shopt - volby shellu, při spuštění -+O volba
+
+trap - nastavení obsluh signálů
+
+ulimit - výpis (-a) a nastavení limitů systémových zdrojů (paměť,
+procesor aj.) shellu a procesů z něj spuštěných
+
+umask práva - výpis (bez práv nebo -S) a nastavení práv u nově
+vytvářených souborů a adresářů (jako u chmod)
+
+aj.
+
+- další: prostředí vykonávání příkazu a programu, signály, správa
+úloh, nastavení promptů, příkazový řádek (knihovna readline, klávesy),
+historie příkazů a expanze, aj.
+
+sed = stream editor
+-------------------
+
+= proudový, neinteraktivní řádkový, editor pro systematickou a
+opakovanou (a rychlou) manipulaci s řádky textu - typicky změna nebo
+extrakce textu
+
+- filtr = načítá text ze std. vstupu nebo souborů (zadaných jako
+parametry a zřetězeny) a zeditovaný text vypisuje na std. výstup
+
+-> použití ve skriptech
+
+- průběh: opakování načtení řádku (bez znaku zalomení řádku na konci)
+do vstupního bufferu (pattern space), test vykonání a vykonání
+editovacích příkazů v zadaném pořadí nad vstupním bufferem, výpis
+vstupního bufferu (i s odřádkováním) - potlačení -n, výmaz vstupního
+bufferu
+
+- editovací příkazy, tzv. sed skript, jako parametry na příkazovém
+řádku, -e skript, nebo v souboru, -f soubor_skriptu: sloučení všech
+skriptů do jednoho, bez -e nebo -f je první parametr nezačínající -
+skript či spíše 'skript' pro potlačení speciálního významu některých
+znaků v shellu (mezera, $, \, *, {}, (), !, #)
+
+- skript: posloupnost příkazů oddělených ; nebo na samostatných
+řádcích, příkaz = adresa1,adresa2 funkce parametry - bez mezer (a
+tabulátorů, ignorovány!), adresy nepovinné, určují rozsah řádků, pro
+které se má funkce vykonat, při nezadání pro každý
+
+- adresa: číslo řádku od 1, $ poslední řádek, /regulární výraz/ nebo
+\%regulární výraz% (lib. znak místo %) - řádky (vstupní buffer)
+obsahující řetězec vyhovující výrazu, // poslední
+
+- regulární výrazy: základní POSIX (BRE), m,n v \{m,n\} 0-265, escape
+sekvence jako u příkazu echo shellu
+
+- funkce - max. počet adres jednopísmenné jméno(zbytek názvu)
+parametry (bez mezery):
+
+0 # - zahajuje komentář do konce řádku příkazu, pokud jako první znak
+příkazu, #n navíc vypíná automatický výstup jako -n
+
+2 ! funkce - vykonání funkce pokud adresa pro aktuální načtený řádek
+neplatí
+
+1 q(uit) - výpis vstupního bufferu (ne při -n) a konec běhu
+
+2 d(elete lines) - výmaz vstupního bufferu a další iterace skriptu
+
+2 p(rint) - výpis vstupního bufferu
+
+2 n(ext line) - výpis vstupního bufferu a načtení dalšího řádku ze
+vstupu do vstupního bufferu
+
+2 { ... } - skupina funkcí ..., vykonaných jen při neprázdném vstupním
+bufferu, funkce oddělené ; nebo na samostatných řádcích
+
+2 s(ubstitute)/regulární výraz/text/flags - nahrazení první části
+textu ve vstupním bufferu vyhovující regulárnímu výrazu textem, místo
+/ lze použít lib. znak (kromě mezery a nového řádku), který není ve
+výrazu (jinak za \), \n v textu pro část vyhovující n-tému (1-9)
+podvýrazu, & v textu pro část vyhovující celému výrazu, flags: číslo n
+(1 až 512) - nahrazena n-tá vyhovující část textu, g - nahrazeny
+všechny vyhovující (nepřekrývající se) části textu, p - při nahrazení
+výpis změněného vstupního bufferu, w soubor - při nahrazení přidání
+změněného vstupního bufferu do souboru (přepsán)
+
+2 y/řetězec1/řetězec2/ - nahrazení znaků z řetězce1 znaky v řetězci2
+na stejné pozici ve vstupním bufferu, řetězce stejně dlouhé, místo /
+lze použít lib. znak (kromě mezery a nového řádku)
+
+1 a(ppend lines) \ text - výpis textu po výpisu vstupního bufferu (po
+odřádkování), text od nového řádku, při více řádcích textu na konci
+každého kromě posledního \, text není zpracováván (až na \), mezery (a
+tabulátory) na začátcích řádků textu ignorovány, pokud neuvozeny \
+
+1 i(nsert lines) \ text - výpis textu (před výpisem vstupního bufferu,
+po odřádkování), zbytek jako a
+
+2 c(hange lines) \ text - nahrazení vstupního bufferu textem (jednou
+pro celý rozsah adres), výpis nového vstupního bufferu a další iterace
+skriptu, zbytek jako a, nový vstupní buffer vypsán ještě před výpisem
+textu/souboru funkcemi a a r
+
+1 = - výpis čísla aktuálního načteného řádku na samostatný řádek
+
+2 l(ist pattern space on the standard output) - výpis vstupního
+bufferu, netisknutelný znak jako ASCII hodnota (dvě šestnáctkové
+číslice), dlouhé řádky zalomeny - délka zadána parametrem sedu -l
+(výchozí 70, 0 = nezalamovat)
+
+2 r(ead contents of a file) soubor - výpis souboru po výpisu vstupního
+bufferu (po odřádkování,) mezi r a soubor jedna mezera, neexistující
+soubor jako prázdný
+
+2 w(rite to a file) soubor - přidání vstupního bufferu do souboru
+(přepsán), mezi w a soubor jedna mezera
+
+2 D(elete first part of pattern space) - výmaz vstupního bufferu od
+začátku do znaku nového řádku (viz funkce N) a skok na začátek
+skriptu, další řádek načten do vstupního bufferu jen pokud došlo k
+výmazu celého vstupního bufferu
+
+2 N(ext line) - přidání dalšího řádku ze vstupu do vstupního bufferu,
+oddělený novým řádkem
+
+2 P(rint first part of the pattern space) - výpis vstupního bufferu od
+začátku do znaku nového řádku
+
+2 h(hold pattern space) - nahrazení hold bufferu, pomocného místa pro
+text (sed nemá proměnné!), vstupním bufferem
+
+2 H(old patter space) - vstupní buffer přidán k hold bufferu, oddělený
+novým řádkem
+
+2 g(et contents of hold area) - nahrazení vstupního bufferu hold
+bufferem
+
+2 G(et contents of hold area) - hold buffer přidán ke vstupnímu
+bufferu, oddělený novým řádkem
+
+2 (e)x(change) - prohození obsahu vstupního a hold bufferu
+
+0 : návěští - definice návěští (řetězec znaků), v rámci skriptu
+jedinečné
+
+2 b(ranch to label) návěští - skok na návěští, při nezadání na konec
+skriptu
+
+2 t(est substitutions) návěští - skok na návěští, pokud od začátku
+skriptu nebo posledního t došlo k nahrazení funkcí s nebo y, při
+nezadání na konec skriptu
+
+- proměnné shellu v sed skriptu (který je mezi ''): vyjmutí expanze
+proměné z '' (přerušení '') nebo skript v "" (zůstává speciální význam
+$)
+
+awk
+---
+
+- autoři Aho, Weinberger, Kernighan, 1977, dnes verze z 1985
+
+= programovací jazyk pro analýzu a zpracování textových (typicky
+tabulkových) dat
+
+- provedení akcí pro jednotlivé řádky textu vyhovující tzv. vzorkům -
+typicky výběr částí řádků (sloupců), nahrazení částí jiným textem
+
+- text načtený ze std. vstupu nebo ze souborů (zadaných jako
+parametry), každý řádek rozdělený do sloupců, tzv. polí, oddělených
+mezerami (a tabulátory), a testován vůči všem vzorkům
+
+- syntaxe podobná prog. jazyku C - awk snadnější pro zpracování textu,
+na úkor rychlosti => programování nejdříve v awk, po odladění přepsání
+do jiného prog. jazyka (automaticky awkcc, a2p)
+
+- awk program zadaný jako první parametr na příkazovém řádku, mezi ''
+pro potlačení speciálního významu některých znaků v shellu, za
+parametry -e, ze souborů (typicky s příponou .awk) -f program.awk nebo
+ze std. vstupu, více -e a -f zřetězeno, mezery (a tabulátory)
+ignorovány
+
+- awk program: posloupnost "vzorek { akce }" (bez "") na samostatných
+řádcích, vzorek anebo akce nepovinná, při neuvedení akce (včetně {})
+je akcí výpis celého řádku vyhovujícího vzorku, při neuvedení vzorku
+provedení akce pro všechny řádky, akce vykonávány v pořadí
+vyhovujících vzorků (vyjma vzorků BEGIN a END)
+
+- vzorek: log. výraz - řádek vyhovuje při pravdivém (nenulové číslo,
+neprázdný řetězec), /regulární výraz/ - řádek vyhovuje když odpovídá
+výrazu, složení z více výrazů &&,||,!,(),?:, výraz1,výraz2 - vyhovují
+řádky od prvního vyhovujícímu výrazu1 po poslední vyhovující výrazu2,
+nelze kombinovat, speciální BEGIN - akce vykonána před prvním řádkem
+vstupních dat, např. nastavení oddělovače polí, END - po posledním
+řádku, např. souhrnný výpis, oba nelze kombinovat, musí být akce
+
+- regulární výrazy: rozšířené POSIX (ERE), escape sekvence jako u
+příkazu echo shellu (osmičkově bez 0)
+
+- akce: posloupnost příkazů oddělených ; nebo na samostatných
+řádcích, { na stejném řádku jako vzorek
+
+- datové typy: čísla (necelá s . nebo s -N podle lokalizace,
+semilogaritmický tvar s e/E) a textové řetězce (zadané v "", vč.
+escape sekvencí), aut. konverze, manuální číslo"" (podle formátu v
+interní proměnné OFMT, výchozí .6g), řetězec+0 (jen počáteční znaky
+pro čísla)
+
+- proměnné: jméno (i použití, alfanumerické znaky, první znak),
+vytvoření a inicializace při prvním použití (tj. bez deklarace),
+výchozí hodnoty 0 pro číselné, prázdný řetězec pro řetězcové,
+přiřazení hodnoty = (i -v jméno=hodnota před BEGIN nebo jen
+jméno=hodnota po BEGIN), výpis -d, interní NF - počet polí řádku, NR
+číslo řádku od 1, FS - znak jako oddělovač polí, výchozí mezera, při
+mezeře lib. počet mezer a tabulátorů, také za parametrem -F, RS - znak
+jako oddělovač řádků, výchozí znak pro nový řadek, při prázdném
+oddělovač prázdný řádek a znak pro nový řadek i oddělovač polí, ARGC a
+ARGV - neznámé parametry nebo za --, aj.
+
+- $N (N výraz, příp. v (), vyhodnocený na celé číslo od 0) - N-té pole
+řádku (jako řetězec), $0 celý řádek, přiřazení do pole za NF zvýší NF,
+snížení NF zruší vyšší pole
+
+- pole (prvků): jméno[index], index celé číslo, vytvoření a
+inicializace prvku při prvním použití (tj. bez deklarace), výchozí
+hodnoty jako u proměnných, vymazání delete jméno[index], delete jméno
+
+- operátory: porovnání (v log. výrazech) pro čísla a řetězce
+<,>,==,!=,<=,>= (pro přednější řetězce porovnání po znacích, např.
+podle ASCII),~ = pravý řetězec obsažen v levém,!~, aritmetické
++,-,*,/, řetězcové spojení = mezera
+
+- blok příkazů v {} oddělených ;
+
+- podmínky: if (log. výraz) příkaz [ else příkaz], switch (výraz) {
+case hodnota|reg. výraz : příkaz ... [ default: příkaz ] }
+
+- cykly: while (log. výraz) příkaz, do příkaz while (log. výraz), for
+(;;) příkaz - v () jako v C, for (proměnna in pole) příkaz, v bloku
+příkazů break, continue
+
+- funkce: vlastní function jméno(parametry) { příkazy }, volání
+jméno(argumenty), vestavěné:
+
+ - číselné: sin, sqrt aj.
+
+ - řetězcové: length (bez znaku nového řádku), substr aj.
+
+ - vstupní a výstupní:
+
+print argumenty - výpis argumentů na std. výstup, argumenty oddělené ,
+(čárkou) vypsané oddělené mezerou, jinak bez oddělení, bez argumentů
+vypsán celý řádek
+
+printf (formát, hodnota, ...) - formátovaný výstup jako v C (formát
+řetězec v "" s formátovacími instrukcemi za %)
+
+a další
+
+- komentář: # do zbytku řádku
+
+- integrovaný debugger: -D, interaktivní příkazy po načtení programu
+zadaného pomocí -f
+
+TODO 38
+
+Národní prostředí (české)
+-------------------------
+
+- jazyk a rozložení klávesnice grafického prostředí závisí na
+lokalizaci a nastavení desktopového (grafického) prostředí nebo
+grafického režimu systému
+
+- jazyk a rozložení klávesnice (na celé obrazovce) textového prostředí
+(konzole terminálu) závisí na lokalizaci a (systémovém) nastavení
+klávesnice
+
+- lokalizace = národní zvyklosti (jazyková a kulturní pravidla) v
+systému (daná knihovnou libc) - jazyk zpráv/výpisů programů, množina
+znaků, uspořádání znaků atd.
+
+- kategorie: LC_CTYPE klasifikace znaků (posloupností bytů jako
+znaků), třídy (písmena aplha, číslice digit a xdigit, obojí alnum,
+bílé znaky blank a space apod.) a velikosti písmen (lower, upper),
+LC_NUMERIC formát čísel kromě peněz (desetinná čárka/tečka,
+oddělovač tisíců aj.), LC_TIME formát data a času (jména dnů a měsíců,
+formáty, první den aj.), LC_COLLATE pořadí znaků (pro rozsahy a
+porovnání řetězců), LC_MONETARY formát peněžních částek (desetinná
+čárka/tečka, oddělovač tisíců, počet deset. míst, znak měny aj.),
+LC_MESSAGES jazyk zpráv/výpisů programů a jaká je poziviní a
+negativní odpověď, LC_PAPER velikost papíru, LC_NAME formát jmen,
+LC_ADDRESS formát adres a míst, LC_TELEPHONE formát tel. čísel,
+LC_MEASUREMENT jednotky (metrické, jiné), LC_IDENTIFICATION metadata k
+lokalizaci, více man 5 locale
+
+- hodnoty jazyk[_ZEMĚ[.kódování]] (jazyky ISO 639, země ISO 3166),
+např. cs_CZ.UTF-8, sk_SK.UTF-8, speciální (výchozí) C, POSIX, výpis
+locale -ack
+
+- lokalizační proměnné shellu (z nastavení systému): LC_ALL pro
+všechny, LC_* (CTYPE, COLLATE, NUMERIC, MESSAGES), LANG výchozí pro
+nenastavené, nastavení pro shell (a vše z něj spuštěné) - export
+
+- regulární výrazy: třídy [:jméno:], jména z LC_CTYPE, rozsahy a
+porovnání znaků, znaky jako víceznakové sekvence [.sekvence.] (tzv.
+collating elements, např. ch) a ekvivalentní znaky [=znak=] (např. e,
+é, ě) podle LC_COLLATE
+
+- dnes standardně kódování textu UTF-8, bez BOM (Byte Order Mark, UTF
+signatura, U+FEFF), dříve ISO 8859-2 (ISO Latin 2)
+
+- odřádkování znak LF (Line Feed, hodnota 0xA)
+
+- zjištění kódování: file, enca, chardet
+
+- převod mezi kódováními (včetně ASCII) a konci řádků: cstocs, recode
+-l, iconv -ftl, enconv -x, dos2unix, unix2dos
+
+- překódování jmen souborů a adresářů: convmv -ftr
+
+Specifika oproti UNIXu (standardu POSIX)
+----------------------------------------
+
+Linux
+
+= nejvýznamnější unixový OS (GNU/Linux), rozšířený
+
+- dokumentace SW v /usr/share/doc
+
+- podpora mnoha soub. systémů, p(u)mount, speciální soubory zařízení
+(/dev/[sda*,audio] aj.), LSB standard adresářové struktury (/media,
+/proc, /srv, /sys), soubory a adresáře v /boot (vmlinuz, initrd.img),
+/etc (init.d), /lib (modules) aj.
+
+- priority procesů 19 až -20, ps: unixové (začínající -), BDS (bez -)
+a GNU (--dlouhe) parametry
+
+GNU
+
+= projekt volně použitelného a šiřitelného (svobodného) SW a unixového
+OS: shell (Bash), překladač (GCC), editor (Emacs) aj., licence GPL
+
+- dokumentace Info
+
+- parametry programů mohou být i za soubory, --dlouhe_parametry
+
+- textutils
+
+- grep: -q vedle -s (ale nejlépe &>/dev/null), není rozdíl v
+možnostech základních (-G, výchozí) a rozšířených (-E, egrep) reg.
+výrazů, proměnná POSIXLY_CORRECT
+
+- Bash: --posix, spuštění jako sh, nastavení proměnné
+POSIXLY_CORRECT, set -o posix -> POSIX režim, time -p pro POSIX
+výstup, dále POSIX režim: ./source nehledá v akt. adresáři, bg
+vyžaduje zadání čísla úlohy, výchozí soubor historie ~/.sh_history
+místo ~/.bash_history, kill nezná specifikaci signálů s prefixem SIG,
+jména funkcí jen písmena, číslice (ne na začátku) a _, přiřazení před
+voláním funkce zůstávají po ukončení funkce, set nevypisuje funkce,
+expanze ~ jen před příkazem, při login shellu jen /etc/profile a
+~/.profile, ENV místo BASH_ENV, ale při interaktivním shellu, samotný
+příkaz time pro čas shellu (a podshellů), další v BASH Manuálu, část
+6.11 (http://www.gnu.org/software/bash/manual/bash.html)
+
+- sed: --posix, -r pro rozšířené regulární výrazy (ERE), /RE/I pro
+nerozlišování velikosti písmen, /RE/e při nahrazení vykonání změněného
+vstupního bufferu jako příkazu a jeho nahrazení výstupem, -s pro
+soubory samostatně, ne zřetězení, adresy n~k pro každý k-tý řádek od n
+(při n=0 je n=k), 0,/RE/ pro 1. řádek vyhovující RE, adresa1,+n pro n
+řádků za řádkem vyhovujícím adresa1, adresa1,~n pro řádky od
+vyhovující adresa1 po číslo řádku násobek n, návratový kód u funkce q,
+délka řádku u funkce l, funkce Q pro konec běhu, R soubor pro výpis
+řádky souboru, T pro skok na návěští, pokud od začátku skriptu nebo
+posledního t NEdošlo k nahrazení funkcí s nebo y, W soubor pro přidání
+řádky vstupního bufferu do souboru
+
+- awk: gawk (GNU awk), -P/--posix (compatibility mode),
+-c/--traditional UNIX (znak t za -F dá TAB do FS, klasicky '\t', ne
+{n,m} v reg. výrazech), \yB<>sSwW`'x v reg. výrazech, -N pro oddělovač
+desetinných míst podle locales (výchozí .), ne -i knihovna.awk a
+direktiva @include "knihovna.awk" pro vložení ze souboru, cesty pro
+soubory pro -f a -i v proměnné prostředí AWKPATH, osmičkové a
+šestnáctkové konstanty, nějaké spec. proměnné, operátor ** jako ^,
+vzorky BEGINFILE a ENDFILE, reg. výraz v FS a RS, FS jako prázdný
+řetězec = rozdělení řádku na znaky, func kromě function, další
+volitelné parametry některých funkcí a nové funkce (and, or, xor,
+asort, mktime, patsplit l/rshift aj.), nepřímé volání funkcí přes
+proměnnou (var="jmeno_funkce", @var()), dynamické nahrávání funkcí
+pomocí extension(), delete pole, nextfile
+
+Mac OS X
