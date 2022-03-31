@@ -719,3 +719,8 @@ LEPŠÍ MOŽNOST
           basename
       fi
 
+Vygenerujte 1000 souborů z následujícího úkolu s pořadovými čísly 0001 až 1000 a náhodným datem (ne nutně reálným, MM od 01 do 12, DD od 01 do 31, YYYY od 0001 do 9999), do adresáře zadaného jako argument.
+
+
+
+Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předpona a NNNN je pořadové číslo od 0000 do 9999. V každém souboru je textově zapsané datum ve tvaru MM/DD/YYYY zleva zarovnané 0 (ve skutečnosti by z validních souborů fotek ve formátu JPEG bylo možné získat datum a čas pořízení fotky z EXIF informací v souboru). ZIP archiv připraveného adresáře se soubory, pro rozbalení spusťte unzip fotky.zip. Vytvořte skript s adresářem jako argumentem, který přesune soubory do podadresářů adresáře s cestami ve tvaru YYYY/MM/DD. Každý podadresář bude existovat jen pokud v něm bude alespoň jeden soubor.
