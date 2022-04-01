@@ -748,6 +748,101 @@ Vytiskněte 5 náhodných čísel
 
 Vygenerujte 1000 souborů z následujícího úkolu s pořadovými čísly 0001 až 1000 a náhodným datem (ne nutně reálným, MM od 01 do 12, DD od 01 do 31, YYYY od 0001 do 9999), do adresáře zadaného jako argument.
 
+      #!/bin/bash
 
+      #delete directorie which is not empty --> rm -fr dirname
+
+      if [  $# -eq 0 ]
+      then
+          dir_name=Newfolder
+      else
+          dir_name=$1
+      fi
+
+      mkdir $dir_name
+      cd $dir_name
+
+      counter=0
+
+      function date(){
+          tmp=0
+          mnth=$(shuf -i 1-12 -n 1)
+          day=$(shuf -i 1-31 -n 1)
+          year=$(shuf -i 1-9999 -n 1)
+          if [ $mnth -ge 10 ]
+          then
+              counter=$(($counter + 1))
+          else
+              mnth="0$mnth"
+          fi
+
+          if [ $day -ge 10 ]
+          then
+              counter=$(($counter + 1))
+          else
+              day="0$day"
+          fi
+
+          if [ $year -le 10 -a $tmp -eq 0 ]
+          then
+              year="000$year"
+              tmp=$(($tmp + 1))
+          else
+              counter=$(($counter + 1))
+          fi
+
+          if [ $year -le 100 -a $tmp -eq 0 ]
+          then
+              year="00$year"
+              tmp=$(($tmp + 1))
+          else
+              counter=$(($counter + 1))
+          fi
+
+          if [ $year -le 1000 -a $tmp -eq 0 ]
+          then
+              year="0$year"
+              tmp=$(($tmp + 1))
+          else
+              counter=$(($counter + 1))
+          fi
+
+
+          tmp=$(($tmp - 1))   
+
+          curr_date="$mnth/$day/$year"
+          retval=$curr_date
+          # echo "$mnth/$day/$year" > "XYZ000$i.txt"
+      }
+
+      for i in {1..9}
+      do
+          touch "XYZ000$i.txt"
+          date
+          echo "$retval" > "XYZ000$i.txt"
+
+      done
+
+      for i in {10..99}
+      do
+          touch "XYZ00$i.txt"
+          date
+          echo "$retval" > "XYZ00$i.txt"
+      done
+
+      for i in {100..999}
+      do
+          touch "XYZ0$i.txt"
+          date
+          echo "$retval" > "XYZ0$i.txt"
+      done
+
+      for i in {1000..1001}
+      do
+          touch "XYZ$i.txt"
+          date
+          echo "$retval" > "XYZ$i.txt"
+          break
+      done
 
 Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předpona a NNNN je pořadové číslo od 0000 do 9999. V každém souboru je textově zapsané datum ve tvaru MM/DD/YYYY zleva zarovnané 0 (ve skutečnosti by z validních souborů fotek ve formátu JPEG bylo možné získat datum a čas pořízení fotky z EXIF informací v souboru). ZIP archiv připraveného adresáře se soubory, pro rozbalení spusťte unzip fotky.zip. Vytvořte skript s adresářem jako argumentem, který přesune soubory do podadresářů adresáře s cestami ve tvaru YYYY/MM/DD. Každý podadresář bude existovat jen pokud v něm bude alespoň jeden soubor.
