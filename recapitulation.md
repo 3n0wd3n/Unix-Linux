@@ -718,6 +718,23 @@ LEPŠÍ MOŽNOST
           dirname 
           basename
       fi
+      
+Vytiskněte 5 náhodných čísel
+
+      RANDOM=$$
+      for i in {1..5}
+      do
+          printf "$RANDOM\n"
+      done
+      
+      další možnost
+      
+      RANDOM=$$
+      for i in {1..5}
+      do
+          echo $RANDOM
+      done
+      
 
 Vygenerujte 1000 souborů z následujícího úkolu s pořadovými čísly 0001 až 1000 a náhodným datem (ne nutně reálným, MM od 01 do 12, DD od 01 do 31, YYYY od 0001 do 9999), do adresáře zadaného jako argument.
 
