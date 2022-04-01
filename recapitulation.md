@@ -846,3 +846,24 @@ Vygenerujte 1000 souborů z následujícího úkolu s pořadovými čísly 0001 
       done
 
 Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předpona a NNNN je pořadové číslo od 0000 do 9999. V každém souboru je textově zapsané datum ve tvaru MM/DD/YYYY zleva zarovnané 0 (ve skutečnosti by z validních souborů fotek ve formátu JPEG bylo možné získat datum a čas pořízení fotky z EXIF informací v souboru). ZIP archiv připraveného adresáře se soubory, pro rozbalení spusťte unzip fotky.zip. Vytvořte skript s adresářem jako argumentem, který přesune soubory do podadresářů adresáře s cestami ve tvaru YYYY/MM/DD. Každý podadresář bude existovat jen pokud v něm bude alespoň jeden soubor.
+
+      #!/bin/bash
+
+      if [  $# -eq 0 ]
+      then
+          echo "You did not input any directori"
+      else
+          dir_name=$1
+      fi
+
+      cd $dir_name
+
+      # obsah souboru vloží do proměnné --> variable=$(< tmp.txt)
+
+      for i in {0..3}
+      do
+          var=$(< XYZ000$i.txt)
+          echo $var
+      done
+
+
