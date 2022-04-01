@@ -735,6 +735,16 @@ Vytiskněte 5 náhodných čísel
           echo $RANDOM
       done
       
+      poslední možnost s SHUF 
+
+*shuf -i MIN-MAX -n COUNT*
+
+      for i in {1..5}
+      do
+          RAN=$(shuf -i 0-10 -n 1)
+          echo $RAN
+      done
+      
 
 Vygenerujte 1000 souborů z následujícího úkolu s pořadovými čísly 0001 až 1000 a náhodným datem (ne nutně reálným, MM od 01 do 12, DD od 01 do 31, YYYY od 0001 do 9999), do adresáře zadaného jako argument.
 
