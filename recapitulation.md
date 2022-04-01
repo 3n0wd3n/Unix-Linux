@@ -869,5 +869,60 @@ Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předp
           var=$(< XYZ000$i.txt)
           echo $var
       done
+      
+      -------------------------------
+      
+      #!/bin/bash
+
+      if [  $# -eq 0 ]
+      then
+          echo "You did not input any directori"
+      else
+          dir_name=$1
+      fi
+
+      # obsah souboru vloží do proměnné --> variable=$(< tmp.txt)
+
+      # šlo by to udělat i tak, že bych si vždy vyselektoval mezi soubory složky (pomocí regex)
+
+      cd $dir_name
+      word_count=$(ls | wc -l)
+      for (( i = 0; i < $word_count; i ++ )) 
+      do
+          tmp=$(ls | wc -l)
+          IFS='/'
+          files=(*)
+          file=${files[$(($tmp - 1))]}
+          word_from_file=$(< $file)
+          # echo $word_from_file
+          read -ra word_arr <<< $word_from_file
+          mnth=${word_arr[0]}
+          day=${word_arr[1]}
+          year=${word_arr[2]}
+          IFS=""
+          # complete_word="${word_arr[0]}/${word_arr[1]}/${word_arr[2]}"
+          # echo $complete_word
+          mkdir -p $year/$mnth/$day
+          mv $file  $year/$mnth/$day
+          tmp=$(ls | wc -l)
+          # printf "${word_arr[0]}\n"
+          # printf "${word_arr[1]}\n"
+          # printf "${word_arr[2]}\n"
+
+          # for (( i = 1; i < $word_count; i ++ )) 
+          # do  
+          # file=${files[i]}
+          # if [ $file == ${word_arr[2]} ]
+          # then
+          #     cd ${word_arr[2]}
+          #     word_count_two=$(ls | wc -l)
+
+          # else
+          #     mkdir ${word_arr[2]}
+          #     cd ${word_arr[2]}
+          # fi
+          # done
+      done
+
 
 
