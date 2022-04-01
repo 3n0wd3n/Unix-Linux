@@ -1,6 +1,10 @@
 
 **Programování v unixovém shellu - úkoly**
 
+Special loop
+
+      for x in $(echo -e 'slovo\ndalsi\njeste\n'); do echo $x; done
+
 Spusťte aplikaci emulace terminálu (Terminál, Konsole apod.). Následující provádějte v této aplikaci (terminálu).
 
 Napište do příkazové řádky terminálu jakýkoliv text, pohybujte po něm kurzorem (klávesy ← a →, C-← a C-→, Home, End, C-a, C-e), editujte jej (klávesy Del, C-d, Backspace, C-t, C-k, C-y, označení textu myší a S-C-c, S-C-v) a potvrďte (klávesa Enter).
