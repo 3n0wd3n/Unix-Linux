@@ -924,5 +924,6 @@ Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předp
           # done
       done
 
+[FOTKY na kterých se úkol testoval](https://github.com/3n0wd3n/Unix-Linux/files/8405082/fotky.zip)
 
 
