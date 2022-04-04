@@ -923,6 +923,40 @@ Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předp
           # fi
           # done
       done
+      
+TAKHLE VYPADÁ FINÁLNÍ VERZE
+
+#!/bin/bash
+
+      function sort_to_files(){
+          cd $dir_name
+          word_count=$(ls | wc -l)
+          for (( i = 0; i < $word_count; i ++ )) 
+          do
+              tmp=$(ls | wc -l)
+              IFS='/'
+              files=(*)
+              file=${files[$(($tmp - 1))]}
+              word_from_file=$(< $file)
+              read -ra word_arr <<< $word_from_file
+              mnth=${word_arr[0]}
+              day=${word_arr[1]}
+              year=${word_arr[2]}
+              IFS=""
+
+              mkdir -p $year/$mnth/$day
+              mv $file  $year/$mnth/$day
+              tmp=$(ls | wc -l)
+          done
+      }
+
+      if [  $# -eq 0 ]
+      then
+          echo "You did not input any directori"
+      else
+          dir_name=$1
+          sort_to_files
+      fi
 
 [FOTKY na kterých se úkol testoval](https://github.com/3n0wd3n/Unix-Linux/files/8405082/fotky.zip)
 
