@@ -17,6 +17,12 @@
   
   https://www.digitalocean.com/community/tutorials/how-to-use-the-awk-language-to-manipulate-text-in-linux
   
+  https://tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html#chap_07
+  
+  https://www.gnu.org/software/grep/manual/grep.html
+  
+  https://www.gnu.org/software/sed/manual/sed.html
+  
     $ ssh hajnym@phoenix.inf.upol.cz
   
     $ password: ********
