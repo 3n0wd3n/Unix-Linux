@@ -965,4 +965,7 @@ Vytvořte sed skript, který z textu vyfiltruje jen řádky od 10. řádku do 20
       sed '10!G;h;19!d' test.txt
       sed -f script.sed test.txt
 
+Složka na které jsem to testoval [test.txt](https://github.com/3n0wd3n/Unix-Linux/files/8449812/test.txt)
+
+
 Vytvořte sed skript, který sloučí sousední řádky textu končící znakem -, pokud před ním nejsou bílé znaky (mezera, tabulátor), spolu s následujícím řádkem (již bez znaku - na konci) do jednoho řádku, s odstraněním znaků -.
