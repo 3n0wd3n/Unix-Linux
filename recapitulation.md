@@ -961,4 +961,6 @@ TAKHLE VYPADÁ FINÁLNÍ VERZE
 
 Vytvořte sed skript, který z textu vyfiltruje jen řádky od 10. řádku do 20. řádku včetně (počítáno od 1) v opačném pořadí řádků.
 
+      sed -n '10, 19 p' $1 | sed '1!G;h;$!d' test.txt (nefunkční)
+
 Vytvořte sed skript, který sloučí sousední řádky textu končící znakem -, pokud před ním nejsou bílé znaky (mezera, tabulátor), spolu s následujícím řádkem (již bez znaku - na konci) do jednoho řádku, s odstraněním znaků -.
