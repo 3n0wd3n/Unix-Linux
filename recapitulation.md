@@ -959,6 +959,12 @@ TAKHLE VYPADÁ FINÁLNÍ VERZE
 
 [FOTKY na kterých se úkol testoval](https://github.com/3n0wd3n/Unix-Linux/files/8405082/fotky.zip)
 
+PŘEDCHOZÍ PŘÍKLAD FUNGOVAL JEN NA MÉM WSL A TAK JSME MUSELI TEN KOD SPUSTIT S PŘÍKAZEM (SET -X), KTERÝ VYPISUJE CO PROGRAM V PRŮBĚHU DĚLÁ A PAK JSEM TADY TENHGLE VÝPIS MĚL PŘESMĚROVAT DO SOUBORU A ODESLAT COŽ SE DĚLÁ TIMTO PŘÍKAZEM
+
+      ./test.sh fotky &>> doc.txt
+      
+      KDE test.sh je ten soubor s programem a fotky jsou adresář kde je 1000 souboru s příponou .jpg a pomocí &>> přesměrujeme hlášky do souboru doc.txt
+
 Vytvořte sed skript, který z textu vyfiltruje jen řádky od 10. řádku do 20. řádku včetně (počítáno od 1) v opačném pořadí řádků.
 
       sed -n '10, 19 p' $1 | sed '1!G;h;$!d' test.txt (nefunkční)
@@ -973,3 +979,4 @@ Vytvořte sed skript, který sloučí sousední řádky textu končící znakem 
       $ sed -E ':a ; $!N ; s/a$/ / ; ta ; P ; D' test.txt
       
 [POMOCNÁ DOKUMENTACE](https://www.gnu.org/software/sed/manual/html_node/Joining-lines.html)
+
