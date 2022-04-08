@@ -976,7 +976,10 @@ Složka na které jsem to testoval [test.txt](https://github.com/3n0wd3n/Unix-Li
 
 Vytvořte sed skript, který sloučí sousední řádky textu končící znakem -, pokud před ním nejsou bílé znaky (mezera, tabulátor), spolu s následujícím řádkem (již bez znaku - na konci) do jednoho řádku, s odstraněním znaků -.
 
-      $ sed -E ':a ; $!N ; s/a$/ / ; ta ; P ; D' test.txt
+      $ sed -E ':a ; $!N ; s/a$/ / ; ta ; P ; D' test.txt ()
+      $ :start;/[^[:space:]]-$/{ s/-$//; N; s/\n// };/[^[:space:]]-$/b start
+      
+      $ :a;/[^[:space:]]-$/{N;s/-\n//;ba} $a\
       
 [POMOCNÁ DOKUMENTACE](https://www.gnu.org/software/sed/manual/html_node/Joining-lines.html)
 
