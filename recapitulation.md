@@ -981,5 +981,7 @@ Vytvořte sed skript, který sloučí sousední řádky textu končící znakem 
       
       $ :a;/[^[:space:]]-$/{N;s/-\n//;ba} $a\
       
+      /-$/{N;s/-\n//}
+      
 [POMOCNÁ DOKUMENTACE](https://www.gnu.org/software/sed/manual/html_node/Joining-lines.html)
 
