@@ -926,8 +926,7 @@ Uvažujme adresář obsahující soubory XYZNNNN.jpg, kde XYZ je nějaká předp
       
 TAKHLE VYPADÁ FINÁLNÍ VERZE
 
-#!/bin/bash
-
+      #!/bin/bash
       function sort_to_files(){
           cd $dir_name
           word_count=$(ls | wc -l)
@@ -960,4 +959,6 @@ TAKHLE VYPADÁ FINÁLNÍ VERZE
 
 [FOTKY na kterých se úkol testoval](https://github.com/3n0wd3n/Unix-Linux/files/8405082/fotky.zip)
 
+Vytvořte sed skript, který z textu vyfiltruje jen řádky od 10. řádku do 20. řádku včetně (počítáno od 1) v opačném pořadí řádků.
 
+Vytvořte sed skript, který sloučí sousední řádky textu končící znakem -, pokud před ním nejsou bílé znaky (mezera, tabulátor), spolu s následujícím řádkem (již bez znaku - na konci) do jednoho řádku, s odstraněním znaků -.
