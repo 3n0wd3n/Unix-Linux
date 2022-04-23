@@ -985,10 +985,10 @@ Vytvořte sed skript, který sloučí sousední řádky textu končící znakem 
       
 [POMOCNÁ DOKUMENTACE](https://www.gnu.org/software/sed/manual/html_node/Joining-lines.html)
 
-Vytvořte skript (shell, sed), který pro každý řádek na vstupu ve tvaru 'Jméno Příjmení <emailová@adresa>' (bez '', položky oddělené mezerami) vytvoří kopii textového souboru, šablony zadané jako argument skriptu, ve kterém budou všechny řetězce JMENO a PRIJMENI nahrazeny Jménem a Příjmením ze vstupu a před obsahem bude na prvním řádku <emailová@adresa> následovaná prázdným řádkem. Kopie budou pojmenovány jako šablona s uvedením čísla řádku ze vstupu ve jménu.
+Vytvořte skript (shell/sed), který pro každý řádek na vstupu ve tvaru 'Jméno Příjmení <emailová@adresa>' (bez '', položky oddělené mezerami) vytvoří kopii textového souboru, šablony zadané jako argument skriptu, ve kterém budou všechny řetězce JMENO a PRIJMENI nahrazeny Jménem a Příjmením ze vstupu a před obsahem bude na prvním řádku <emailová@adresa> následovaná prázdným řádkem. Kopie budou pojmenovány jako šablona s uvedením čísla řádku ze vstupu ve jménu.
 
 [ukol_10.zip](https://github.com/3n0wd3n/Unix-Linux/files/8542511/ukol_10.zip)
 
-Vytvořte skript (shell, sed), který z HTML dokumentu na vstupu vypíše pouze URL adresy všech odkazů, přesněji hodnoty atributu HREF všech elementů A v dokumentu. Nezapomeňte korektně ošetřit i případy, kdy za jménem elementu A mohou být i jiné atributy než HREF a kdekoliv mezi A a HREF může být element (i vícekrát) zalomen na další řádek! Samotné URL adresy zalomeny nebudou.
+Vytvořte skript (shell/sed), který z HTML dokumentu na vstupu vypíše pouze URL adresy všech odkazů, přesněji hodnoty atributu HREF všech elementů A v dokumentu. Nezapomeňte korektně ošetřit i případy, kdy za jménem elementu A mohou být i jiné atributy než HREF a kdekoliv mezi A a HREF může být element (i vícekrát) zalomen na další řádek! Samotné URL adresy zalomeny nebudou.
 
 [ukol_11.zip](https://github.com/3n0wd3n/Unix-Linux/files/8543723/ukol_11.zip)
