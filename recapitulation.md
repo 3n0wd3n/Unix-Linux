@@ -992,3 +992,7 @@ Vytvořte skript (shell/sed), který pro každý řádek na vstupu ve tvaru 'Jm�
 Vytvořte skript (shell/sed), který z HTML dokumentu na vstupu vypíše pouze URL adresy všech odkazů, přesněji hodnoty atributu HREF všech elementů A v dokumentu. Nezapomeňte korektně ošetřit i případy, kdy za jménem elementu A mohou být i jiné atributy než HREF a kdekoliv mezi A a HREF může být element (i vícekrát) zalomen na další řádek! Samotné URL adresy zalomeny nebudou.
 
 [ukol_11.zip](https://github.com/3n0wd3n/Unix-Linux/files/8543723/ukol_11.zip)
+
+Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konců řádků), slov (neprázdná posloupnost znaků oddělená mezerami nebo tabulátory) a řádků v textu na vstupu.
+
+Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami nebo tabulátory) ze vstupu podle hlavní diagonály, tj. výměnu řádků a sloupců.
