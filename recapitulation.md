@@ -1005,3 +1005,20 @@ Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konc
       }' $* 
 
 Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami nebo tabulátory) ze vstupu podle hlavní diagonály, tj. výměnu řádků a sloupců.
+
+      awk '
+      { 
+          for (i=1; i<=NF; i++)  {
+              a[NR,i] = $i
+          }
+      }
+      NF>p { p = NF }
+      END {    
+          for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR; i++){
+                  str=str" "a[i,j];
+              }
+              print str
+          }
+      }' file
