@@ -1022,3 +1022,5 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
               print str
           }
       }' file
+      
+      (https://stackoverflow.com/questions/1729824/an-efficient-way-to-transpose-a-file-in-bash)
