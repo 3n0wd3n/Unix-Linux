@@ -995,4 +995,13 @@ Vytvořte skript (shell/sed), který z HTML dokumentu na vstupu vypíše pouze U
 
 Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konců řádků), slov (neprázdná posloupnost znaků oddělená mezerami nebo tabulátory) a řádků v textu na vstupu.
 
+      # 2/3 of wc in awk 
+      awk '{  
+          lines += NR 
+          words += NF 
+      } 
+      END { 
+          print lines words 
+      }' $* 
+
 Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami nebo tabulátory) ze vstupu podle hlavní diagonály, tj. výměnu řádků a sloupců.
