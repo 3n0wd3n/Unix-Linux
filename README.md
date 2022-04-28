@@ -23,6 +23,8 @@
   
   https://www.gnu.org/software/sed/manual/sed.html
   
+  https://google.github.io/styleguide/shellguide.html
+  
     $ ssh hajnym@phoenix.inf.upol.cz
   
     $ password: ********
