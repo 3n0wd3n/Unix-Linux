@@ -1066,3 +1066,6 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
               print str
           }
       }
+      
+[ukol_13.zip](https://github.com/3n0wd3n/Unix-Linux/files/8589810/ukol_13.zip)
+
