@@ -995,6 +995,9 @@ Vytvořte skript (shell/sed), který z HTML dokumentu na vstupu vypíše pouze U
 
 Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konců řádků), slov (neprázdná posloupnost znaků oddělená mezerami nebo tabulátory) a řádků v textu na vstupu.
 
+Moje implementace funguje trochu jink než wc:
+![image](https://user-images.githubusercontent.com/47132583/165890176-51d36cee-7a11-4ea7-81d1-d4c8952004e2.png)
+
       # 2/3 of wc in awk 
       awk '{  
           lines += NR 
@@ -1003,6 +1006,15 @@ Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konc
       END { 
           print lines words 
       }' $* 
+      
+      ************************ tady dole je implementace přímo v AWK souboru  ************************
+      # soubor mužeme vyzkoušet takto
+      # odělejte .txt ze souboru ukol_12.awk.txt
+      $ cat test.txt | ./ukol_12.awk
+      
+[ukol_12 .awk.txt](https://github.com/3n0wd3n/Unix-Linux/files/8588409/ukol_12.awk.txt)
+
+[tmp.txt](https://github.com/3n0wd3n/Unix-Linux/files/8588888/tmp.txt)
 
 Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami nebo tabulátory) ze vstupu podle hlavní diagonály, tj. výměnu řádků a sloupců.
 
@@ -1024,3 +1036,33 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
       }' file
       
       (https://stackoverflow.com/questions/1729824/an-efficient-way-to-transpose-a-file-in-bash)
+      
+      {
+	for (i=1; i<NF;i++){
+		rows[i] = rows[i] " " $i
+	}
+      }
+
+      END {
+            for (j=1; j<i;j++)
+                  print rows[j]
+      }
+      
+      *********** another one ***********
+
+      #!/usr/bin/awk -f
+      { 
+          for (i=1; i<=NF; i++)  {
+              a[NR,i] = $i
+          }
+      }
+          NF>p { p = NF }
+      END {    
+          for(j=1; j<=p; j++) {
+              str=a[1,j]
+              for(i=2; i<=NR + 1; i++){
+                  str=str" "a[i,j];
+              }
+              print str
+          }
+      }
