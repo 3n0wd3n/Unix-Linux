@@ -29,6 +29,10 @@
   
     $ password: ********
     
-# Home
+# Home - MARK III
 
     cd /mnt/c/Users/Michal/Desktop
+
+# Home - DELL
+
+    cd /mnt/c/Users/johny/Desktop/
