@@ -24,10 +24,10 @@
   https://www.gnu.org/software/sed/manual/sed.html
   
   https://google.github.io/styleguide/shellguide.html
+
+# SSH Phoenix
   
-    $ ssh hajnym@phoenix.inf.upol.cz
-  
-    $ password: ********
+    ssh hajnym@phoenix.inf.upol.cz
     
 # Home - MARK III
 
