@@ -997,7 +997,9 @@ Implementujte v awk zjednodušenou verzi wc: výpis počtu znaků (včetně konc
 
 Moje implementace funguje trochu jink než wc:
 ![image](https://user-images.githubusercontent.com/47132583/165890176-51d36cee-7a11-4ea7-81d1-d4c8952004e2.png)
-
+	
+      #!/bin/bash
+      
       # 2/3 of wc in awk 
       awk '{  
           lines += NR 
@@ -1017,7 +1019,9 @@ Moje implementace funguje trochu jink než wc:
 [tmp.txt](https://github.com/3n0wd3n/Unix-Linux/files/8588888/tmp.txt)
 
 Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami nebo tabulátory) ze vstupu podle hlavní diagonály, tj. výměnu řádků a sloupců.
-
+      
+      #!/bin/bash
+      
       awk '
       { 
           for (i=1; i<=NF; i++)  {
@@ -1070,7 +1074,9 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
 [ukol_13.zip](https://github.com/3n0wd3n/Unix-Linux/files/8589810/ukol_13.zip)
 
 Vytvořte skript (shell, sed, awk aj.), který pro každého uživatele, který má aktuálně v systému spuštěný alespoň jeden proces, vypíše celkové množství paměti zabrané všemi těmito jeho aktuálně v systému spuštěnými procesy. Jako množství paměti zabrané procesem použijte hodnotu rss vypisovanou pro procesy programem ps.
-
+	
+	#!/bin/bash
+	
 	ps aux | 
 	grep -v 'USER' | 
 	grep -v 'root' |
