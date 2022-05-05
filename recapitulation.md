@@ -1072,6 +1072,8 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
 Vytvořte skript (shell, sed, awk aj.), který pro každého uživatele, který má aktuálně v systému spuštěný alespoň jeden proces, vypíše celkové množství paměti zabrané všemi těmito jeho aktuálně v systému spuštěnými procesy. Jako množství paměti zabrané procesem použijte hodnotu rss vypisovanou pro procesy programem ps.
 
 	ps aux | 
+	grep -v 'USER' | 
+	grep -v 'root' |
 	awk '{
 	    array[$1]+=$6
 	}; 
