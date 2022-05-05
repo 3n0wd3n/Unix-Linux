@@ -1069,3 +1069,17 @@ Implementujte v awk převrácení tabulkových dat (sloupce oddělené mezerami 
       
 [ukol_13.zip](https://github.com/3n0wd3n/Unix-Linux/files/8589810/ukol_13.zip)
 
+Vytvořte skript (shell, sed, awk aj.), který pro každého uživatele, který má aktuálně v systému spuštěný alespoň jeden proces, vypíše celkové množství paměti zabrané všemi těmito jeho aktuálně v systému spuštěnými procesy. Jako množství paměti zabrané procesem použijte hodnotu rss vypisovanou pro procesy programem ps.
+
+	ps aux | 
+	awk '{
+	    array[$1]+=$6
+	}; 
+	END {
+	    for (i in array) 
+	    {
+		print i, array[i]
+	    }
+	}'
+	
+Vytvořte skript (shell, sed, awk aj.), který pro počet dní zadaný jako argument a každého uživatele, který byl nebo aktuálně stále je v systému přihlášen za posledních zadaný počet dní, vypíše celkovou dobu přihlášení (sezení) uživatele v systému. Jako dobu jednoho přihlášení (sezení) uživatele v systému použijte hodnotu vypisovanou v posledním sloupci, pro uživatele v prvním sloupci, programem last spustěným s argumentem pts/{0..9}. Tato hodnota má tvar (počet dní+hodin:minut), kde část počet dní+ nemusí být uvedena, nebo je to still logged in v případě, že uživatel je aktuálně stále v systému přihlášen – v tomto případě je v předposledním sloupci vypsaný čas přihlášení uživatele. Celkovou dobu vypište ve stejném tvaru.
