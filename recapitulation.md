@@ -1091,3 +1091,60 @@ Vytvořte skript (shell, sed, awk aj.), který pro každého uživatele, který 
 	}'
 	
 Vytvořte skript (shell, sed, awk aj.), který pro počet dní zadaný jako argument a každého uživatele, který byl nebo aktuálně stále je v systému přihlášen za posledních zadaný počet dní, vypíše celkovou dobu přihlášení (sezení) uživatele v systému. Jako dobu jednoho přihlášení (sezení) uživatele v systému použijte hodnotu vypisovanou v posledním sloupci, pro uživatele v prvním sloupci, programem last spustěným s argumentem pts/{0..9}. Tato hodnota má tvar (počet dní+hodin:minut), kde část počet dní+ nemusí být uvedena, nebo je to still logged in v případě, že uživatel je aktuálně stále v systému přihlášen – v tomto případě je v předposledním sloupci vypsaný čas přihlášení uživatele. Celkovou dobu vypište ve stejném tvaru.
+
+	#!/bin/bash
+
+	date=$(date +%Y-%m-%d --date='-'$1' day')
+	hour=$(date +%H)
+	minute=$(date +%M)
+	last pts/{0..9} -s $date | 
+	awk '{
+		if( $10 != "in" ) 
+		{
+			print $1 " " $10
+		} 
+		else 
+		{
+			print $1 " " $7 " -"
+		}
+	}' | tac | sed '1d' | sed '1d' | tac | sed 's|[)(]||g' | sed 's|:| |g' | 
+	awk -v h=$hour -v m=$minute '{
+	if ( $4 != "-" ) 
+	{
+		spl = split($2, array_days, "+")
+		if ( spl == 1 )
+		{
+			array[$1] += $2 * 60 + $3
+		}
+		if ( spl == 2 )
+		{
+			array[$1] += array_days[1] * 1440 + array_days[2] * 60 + $3
+		}
+	}
+	if ( $4 == "-" ) 
+	{
+		tmp = h * 60 + m
+		tmp_ = $2 * 60 + $3
+		array[$1] += tmp - tmp_
+	}
+	};
+	END {
+	for (i in array) 
+	{
+		search_for_day = int(array[i] / 1440)
+		search_for_hour = int((array[i] - search_for_day * 1440) / 60)
+		search_for_month = int(array[i] - search_for_day) * 1440 - search_for_hour * 60
+
+		if ( search_for_day != 0 )
+		{
+			printf i
+			printf " %d+%02d:%02d\n", search_for_day, search_for_hour, search_for_month
+		}
+		else
+		{
+			printf i
+			printf " %02d:%02d\n", search_for_hour, search_for_month
+		}
+	}
+	}'
+
