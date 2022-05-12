@@ -1148,3 +1148,6 @@ Vytvořte skript (shell, sed, awk aj.), který pro počet dní zadaný jako argu
 	}
 	}'
 
+Pro seznam jmen ve tvaru Jméno Jméno ... tabulátor PŘÍJMENÍ PŘÍJMENÍ ... (Jména a PŘÍJMENÍ oddělená mezerou), např. ze souboru, v souboru zadaném jako argument nebo načtený ze vstupu, vypište ke každému Jménu v seznamu, v abecedním pořadí Jmen, počet jmen s tímto Jménem.
+
+V seznamu jmen z předchozího úkolu (opět v souboru zadaném jako argument nebo načteném ze vstupu) přepište všechna PŘÍJMENÍ na Příjmení.
