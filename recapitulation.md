@@ -119,7 +119,8 @@ Spusťte (grafické) programy gnome-calculator a gnome-mines (v terminálu), prv
 
 Zobrazte seznam všech souborů a podadresářů v adresáři /dev se jménem začínajícím ttycifra, kde cifra je 0 až 9, a ttynecifra, kde necifra není 0 až 9.
 
-      *
+      $ ls /dev/tty[0-9] /dev/ttyne[!0-9]*
+
 
 Vytvořte soubory (pomocí programu touch) se jmény *** a "1 & 2" (včetně obou ").
 
@@ -259,15 +260,19 @@ Zobrazte počet skupin, do kterých ("váš") uživatel patří.
 
 Zobrazte na jednom řádku seznam všech uživatelů, pod kterými běží v systému alespoň jeden proces.
 
-      *
+      $ ps aux | awk '{print $1}' | sort | uniq
 
 Zobrazte pouze řádky souboru, které nejsou v jiném souboru, tj. "rozdíl" souborů (jako rozdíl množin).
 
       https://stackoverflow.com/questions/15384818/how-to-get-the-difference-only-additions-between-       two-files-in-linux
 
 Zobrazte pouze řádky vstupu obsahující číslo zapsané v šestnáctkové soustavě začínající 0x (s malými i velkými písmeny, jako jedno slovo).
+      
+      $ grep -i "\<0x[0-9a-f]\+\>" <vstupni_soubor>
 
 Zobrazte pouze řádky vstupu, které neobsahují dvě stejná čísla. 
+      
+      $ tr ' ' '\n' | sort | uniq -u | tr '\n' ' '
 
 Vypište seznam všech souborů a podadresářů v adresáři zadaném jako argument (= obsah adresáře) s informacemi o typu (soubor, adresář, symbolický odkaz) a právech (čtení, zápis, spouštění) pro spouštějícího uživatele. Při žádném argumentu v aktuálním adresáři, při prvním argumentu -a (adresář by byl druhý) včetně tzv. skrytých souborů a podadresářů (jinak ne).
 
