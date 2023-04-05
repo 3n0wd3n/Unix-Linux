@@ -42,7 +42,16 @@
         $ paste -d "=" tretiuloha.txt temporary.txt
         
 # Pomocí nástroje grep zobrazte pouze ty řádky vstupního souboru, které obsahují jednoduché matematické formule – tj. vždy jeden operátor = , libovolné základní matematické operace (+, -, * /) a proměnné (znaky a až z). 
-         neudělal jsem !
+         Pro zobrazení pouze řádků obsahujících jednoduché matematické formule pomocí nástroje grep můžete použít                    následující příkaz:
+         grep '=.*[a-z][+-/*][a-z]' soubor.txt
+         ento příkaz vyhledá v souboru soubor.txt všechny řádky, které obsahují řetězec, který obsahuje rovnítko,                    následované jakoukoliv základní matematickou operací (+, -, *, /), a dále následované proměnnou sestávající z              písmen a až z. Pokud vstupní soubor obsahuje řádky jako:
+         5x + 2 = 17
+         a/b = 2
+         2 * a - 3 = b
+         x - y = z
+         Výstup bude vypadat takto:
+         5x + 2 = 17
+         2 * a - 3 = b
 
 # Vytvořte sed skript, který v textovém souboru nejde všechny řádky mezi značkamiBEGIN a END, které obsahují nějaké desetinné číslo. Můžete předpokládat, že BEGINa END jsou na samostatných řádcích.
         $ sed -n ' /BEGIN/, /END/p' cisla.txt > temporary.txt | sed -n '/\.[0-9]/p' temporary.txt
