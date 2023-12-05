@@ -1,5 +1,10 @@
 # Napište příkazy, které vytvoří soubor s názvem me.txt, který bude vypadat následovně:
 
+   Vypiš _ls_ kdž sudé číslo a _ls -l_ když liché:
+
+      counter=0; while true; do if [ $((counter % 2)) -eq 0 ]; then ls; else ls -l; fi; counter=$((counter + 1)); sleep 1; done
+
+
    Domovsky adresar:
    
         /home/PRFAD/kuhrtoma
